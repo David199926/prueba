@@ -1,0 +1,7 @@
+.menuIcon {
+    display: none;
+    width: 2.5rem;
+    @media screen and (max-width: 576px) {
+        display: block;
+    }
+}

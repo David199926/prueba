@@ -1,0 +1,45 @@
+/* importar fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;900&display=swap');
+/* scss */
+@import 'banner';
+
+#inicio {
+    position: relative;
+    /* estilos de la imagen principal*/
+    img.background{
+        position: absolute;
+        top: 0; right: 0;
+        z-index: -1;
+    }
+}
+
+.text-block {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-size: 2.8rem;
+    font-weight: 300;
+    font-style: normal;
+    /* estilo de la negrilla */
+    strong {
+        font-weight: 900;
+    }
+}
+
+/* estilos del titulo */
+.main-title {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 261px 20%;
+    padding-bottom: 200px;
+
+    @media screen and (max-width: 768px) {
+        padding: 261px 5%;
+    }
+}
+
+/* estilos con la imagen del nombre de la compañia*/
+img.company-name {
+    width: 12.5rem;
+    padding: .6rem 0;
+}
