@@ -12,7 +12,6 @@ export const theme = createTheme({
             root: {
                 fontSize: "1rem",
                 borderRadius: "15px",
-                lineHeight: 0,
             },
             label: {
                 textTransform: "none",
@@ -35,7 +34,11 @@ export const theme = createTheme({
                 }
             },
             contained: {
-                backgroundColor: "linear-gradient(to right, #00E6E3 2.73%, #00FF68 100%)",
+                color: "black",
+                background: "linear-gradient(to left, #00E6E3 2.73%, #00FF68 100%)",
+                '&:hover': {
+                    background: "linear-gradient(to right, #00E6E3 2.73%, #00FF68 100%)",
+                }
             }
         },
         MuiDrawer: {
@@ -45,7 +48,7 @@ export const theme = createTheme({
         }
     },
     props: {
-        MuiButton: {
+        MuiButtonBase: {
           disableRipple: true,
         },
     },

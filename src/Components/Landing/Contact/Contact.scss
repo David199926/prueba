@@ -1,0 +1,66 @@
+/* estilos del contenedor principal */
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    box-sizing: border-box;
+    padding: 8rem 0;
+    background: url(../../../Resources/contactBackgroundBig.png) no-repeat;
+    background-size: cover;
+    background-position: center center;
+    /* estilos del bloque de texto */
+    .text-block {
+        text-align: center;
+
+        strong {
+            background: -webkit-linear-gradient(left, #00FF68 0%, #00E6E3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* estilo de la primera linea */
+        div:nth-child(1) {
+            display: flex;
+            flex-direction: row;
+            font-size: 2.25rem;
+        }
+
+        /* estilos de la segunda linea */
+        div:nth-child(2) {
+            font-size: 1.75rem;
+        }
+
+    }
+
+
+    /* estilos del contenedor de enlaces */
+    .contact-links {
+        display: flex;
+        gap: 1.75rem;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 768px) {
+        background: url(../../../Resources/contactBackgroundSmall.png) no-repeat;
+        background-size: cover;
+        background-position: center center;
+
+        .text-block {
+            /* estilo de la primera linea */
+            div:nth-child(1) {
+                flex-direction: column;
+                font-size: 2.57rem;
+            }
+
+            /* estilos de la segunda linea */
+            div:nth-child(2) {
+                font-size: 1.5rem; 
+            }
+
+        }
+    }
+}
+
+/* estilos del footer */
+@import './footer'

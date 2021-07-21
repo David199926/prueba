@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Nav from './Nav/Nav';
 import Inicio from './Inicio/Inicio';
 import Beneficios from './Beneficios/Beneficios';
-import Footer from './Footer/Footer';
+import Contact from './Contact/Contact';
 
 export default class Landing extends Component {
     render() {
@@ -11,9 +11,8 @@ export default class Landing extends Component {
             <div>
                 <Nav/>
                 <Inicio/>
-                {/* 
                 <Beneficios/>
-                <Footer />*/}
+                <Contact />
             </div>
         )
     }

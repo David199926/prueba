@@ -9,7 +9,7 @@ import product from '../../../Resources/team.png';
 const Inicio = () => {
     return (
         <div id="inicio">
-            <img src={world} alt="principal image" className="background" />
+            <img src={world} alt="principal" className="background" />
             <div className="main-title text-block">
                 <span>Bienvenido a tu</span>
                 <span><strong>Entrevista Técnica</strong> en</span>
@@ -24,11 +24,13 @@ const Inicio = () => {
 const Banner = () => {
     return (
         <div id="banner">
-            <img alt="product" src={product} />
-            <div className="text-block">
-                <span>Trabajamos para</span>
-                <span><strong>Convertir ideas</strong> en</span>
-                <span><strong>Productos.</strong></span>
+            <div id="content">
+                <img alt="product" src={product} />
+                <div className="text-block">
+                    <span>Trabajamos para</span>
+                    <span><strong>Convertir ideas</strong> en</span>
+                    <span><strong>Productos.</strong></span>
+                </div>
             </div>
         </div>
     )

@@ -1,5 +1,4 @@
-/* importar fuentes */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;900&display=swap');
+
 /* scss */
 @import 'banner';
 
@@ -31,10 +30,11 @@
     width: 100%;
     box-sizing: border-box;
     padding: 261px 20%;
-    padding-bottom: 200px;
+    padding-bottom: 165px;
 
     @media screen and (max-width: 768px) {
-        padding: 261px 5%;
+        padding: 100px 5%;
+        padding-top: 160px;
     }
 }
 
