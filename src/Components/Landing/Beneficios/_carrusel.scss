@@ -26,12 +26,7 @@
     @include dot;
 }
 
-/* modificando estilos por defecto de las flechas*/
-.cGKbZh:hover:enabled, .cGKbZh:focus:enabled {
-    color: transparent !important; 
-    background-color: transparent !important;
-    box-shadow: none !important;
-}
+
 .ehkxHv{
     color: transparent !important;
     &:disabled {
@@ -42,6 +37,9 @@
     color: transparent !important;
 }
 @mixin arrow {
+    color: transparent !important; 
+    background-color: transparent !important;
+    box-shadow: none !important;
     background-size: cover;
     transition: transform ease-in-out 100ms;
     &:hover {
