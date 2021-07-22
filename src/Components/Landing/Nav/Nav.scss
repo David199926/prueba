@@ -7,8 +7,10 @@
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    border: 2px solid #232323;
+    border: 2px solid;
     z-index: 99;
+    // transicion de color del fondo
+    transition: background-color ease-in-out 200ms;
 
     padding: 1.7rem 13%;
     @media screen and (max-width: 768px) {

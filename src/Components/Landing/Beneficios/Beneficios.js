@@ -8,11 +8,11 @@ import clock from '../../../Resources/Clock.png';
 import home from '../../../Resources/Home.png';
 import workshop from '../../../Resources/Workshop.png';
 import snacks from '../../../Resources/Snacks.png';
-import next from '../../../Resources/Icons/Next.png';
-import prev from '../../../Resources/Icons/Prev.png';
+import remote from '../../../Resources/Remote.png';
+import tech from '../../../Resources/Tech.png';
+
 // Material ui carousel
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import Carousel from 'react-elastic-carousel'
 
 const Beneficios = () => {
     return (
@@ -45,73 +45,32 @@ const beneficios = [
     },
     {
         title: "Semana Remota",
-        img: snacks
+        img: remote
     },
     {
         title: "Trabajar en últimas tecnologías",
-        img: snacks
+        img: tech
     },
 ]
 
 const Carrusel = () => {
 
-    //Styles
-    const activeIndicatorStyles = {
-        border: "none",
-        color: "transparent",
-        background: "linear-gradient(to right, #8FFF73 0%, #8FFFF9 100%)",
-        backgroundClip: "content-box",
-        opacity: 1,
-        width: "12px",
-        height: "12px",
-        padding: "3px"
-    }
-    const indicatorStyles = {
-        ...activeIndicatorStyles,
-        opacity: 0.2
-    }
-
-    const styles = {
-        width: "80%",
-        height: "20rem",
-        display: "block",
-        margin: "auto"
-    }
-
-    const responsive = {
-        desktop: {
-          breakpoint: { max: 3000, min: 1024 },
-          items: 4,
-          slidesToSlide: 2
-        },
-        tablet: {
-          breakpoint: { max: 1024, min: 464 },
-          items: 2,
-          slidesToSlide: 2
-        },
-        mobile: {
-          breakpoint: { max: 464, min: 0 },
-          items: 1,
-          slidesToSlide: 1
-        }
-    };
+    const breakPoints = [
+        { width: 1, itemsToShow: 1, itemsToScroll: 1 }, // Small
+        { width: 576, itemsToShow: 2, itemsToScroll: 2 }, // Medium
+        { width: 768, itemsToShow: 4, itemsToScroll: 2 }, // Large
+    ]
 
     return (
-        <Carousel
-                responsive={responsive}
-                showDots={true}
-                autoPlay={false}
-                focusOnSelect={true}
-                renderArrowsWhenDisabled={true}
-                renderButtonGroupOutside={true}
-                renderDotsOutside={true}
+        <div className="carousel-container" >
+            <Carousel
+                breakPoints={breakPoints}
             >
-                
                 {beneficios.map((item, index) => (
-                    <Beneficio title={item.title} img={item.img} key={`beneficio-${index}`}/>
+                    <Beneficio title={item.title} img={item.img} key={`beneficio-${index}`} />
                 ))}
-                
             </Carousel>
+        </div >
     )
 }
 
