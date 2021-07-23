@@ -1,0 +1,19 @@
+.landing-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0.7;
+    transition: opacity ease-in-out 200ms;
+    &:hover { opacity: 1 }
+
+    .arrow-link {
+        width: .6rem;
+    }
+    .logo-link {
+        width: 6rem;
+    }
+}

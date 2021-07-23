@@ -1,6 +1,11 @@
-import React from 'react'
+import React from 'react';
+// React Router
+import { Link } from 'react-router-dom';
 // Styles
-import './Login.scss'
+import './Login.scss';
+// Resources
+import logo from '../../Resources/CompanyName.png';
+import arrow from '../../Resources/Icons/Arrow.svg';
 // Material Design
 import { Button } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,11 +25,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Login = () => {
+const Login = (props) => {
     const classes = useStyles();
 
     return (
         <div className="login-page">
+            {/* regresar a pagina de inicio */}
+            <LandingLink />
+
             <div className="login-panel">
                 <h1 className="login-title">Inicia <strong>Sesión</strong></h1>
                 <div className="login-inputs">
@@ -46,6 +54,7 @@ const Login = () => {
                     variant="contained"
                     className={classes.button}
                     type="submit"
+                    onClick={ e => props.history.push('/posts')}
                 >
                     Acceder
                 </Button>
@@ -53,6 +62,18 @@ const Login = () => {
                 <ExternalAuth />
             </div>
         </div>
+    )
+}
+
+const LandingLink = () => {
+    return (
+        <Link
+            className="landing-link"
+            to="/"
+        >
+            <img src={arrow} alt="logo" className="arrow-link"/>
+            <img src={logo} alt="logo" className="logo-link"/>
+        </Link>
     )
 }
 
