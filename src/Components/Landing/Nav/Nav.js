@@ -7,7 +7,8 @@ import menu from '../../../Resources/Icons/Menu.svg';
 // material ui
 import { Drawer, List, ListItem } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
-
+import { Link } from 'react-router-dom';
+  
 const Nav = () => {
     // State
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -55,7 +56,9 @@ const Nav = () => {
             <a href="#inicio">INICIO</a>
             <a href="#beneficios">BENEFICIOS</a>
             {/* <Button variant="outlined" className={classes.button}>Login</Button> */}
-            <button className="login-btn" >Login</button>
+            <Link to="/login">
+                <button className="login-btn" >Login</button>
+            </Link>
         </div>
     )
 

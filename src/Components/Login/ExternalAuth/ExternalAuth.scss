@@ -1,0 +1,46 @@
+/* Colores */
+@use "sass:color";
+$facebook-color: #3B5998;
+$google-color: #DE5246;
+
+.exAuth-container {
+    margin-top: 2.5rem;
+    padding: 1rem 0;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    width: 100%;
+    border-top: 1px solid #232323;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* estilos del boton de acceso */
+    .acces-btn {
+        margin: .5rem 0;
+        color: #fff;
+        height: 2.5rem;
+        width: 100%;
+        border: none;
+        font-size: 1rem;
+        transition: background ease-in-out 100ms;
+        &:hover { cursor: pointer; }
+        border-radius: 5px;
+        /* estilos del iocno del boton*/
+        .acces-icon {
+            margin-right: 1rem;
+        }
+    }
+    .acces-btn.facebook {
+        background-color: $facebook-color;
+        &:hover {
+            background-color: color.adjust($color: $facebook-color, $lightness: 5%)
+        }
+    }
+    .acces-btn.google {
+        background-color: $google-color;
+        &:hover {
+            background-color: color.adjust($color: $google-color, $lightness: 5%)
+        }
+    }
+    
+}

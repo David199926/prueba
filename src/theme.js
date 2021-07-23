@@ -45,6 +45,11 @@ export const theme = createTheme({
             paper: {
                 backgroundColor: "#1D2127",
             }
+        },
+        MuiTextField: {
+            root: {
+                color: "white",
+            },
         }
     },
     props: {
