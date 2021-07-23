@@ -1,0 +1,28 @@
+.pageBody {
+    margin-top: 80px;
+    height: 90vh;
+    padding: 1rem;
+    .pageContent {
+        box-sizing: border-box;
+        width: 100%;
+        background-color: white;
+        height: 100%;
+        border-radius: 20px;
+        color: black;
+        padding: 2rem;
+    }
+    /* estilos del titulo */
+    h1 {
+        margin-top: 0;
+        font-size: 3rem;
+        font-weight: 100;
+        .posts {
+            background: linear-gradient(to left, #00E6E3 2.73%, #00FF68 100%);;
+            color: black;
+            padding: .25rem 1rem;
+            margin: 0 .3rem;
+            font-weight: normal;
+        }
+        
+    }
+}

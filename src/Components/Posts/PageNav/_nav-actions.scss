@@ -1,0 +1,15 @@
+.nav-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    @media screen and (max-width: 576px) {
+        display: none;
+    }
+
+    /* estilos del nombre de usuario */
+    .user-name {
+        font-size: 1.3rem;
+        font-weight: 100;
+    }
+}

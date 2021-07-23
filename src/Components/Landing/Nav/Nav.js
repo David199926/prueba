@@ -5,11 +5,12 @@ import './Nav.scss'
 import logo from '../../../Resources/LogoNav.png';
 import menu from '../../../Resources/Icons/Menu.svg';
 // material ui
-import { Drawer, List, ListItem } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from 'react-router-dom';
+// My Components
+import MyDrawer from '../../Common/MyDrawer/MyDrawer';
   
-const Nav = () => {
+const Nav = (props) => {
     // State
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [navInTop, setNavInTop] = useState(true);
@@ -33,10 +34,6 @@ const Nav = () => {
             height: "30px",
             width: "70px",
         },
-        list: {
-            width: 250,
-            color: "white",
-        },
         nav: {
             backgroundColor: navInTop ? "transparent" : "black",
             borderColor:  navInTop ? "#232323" : "black",
@@ -55,33 +52,34 @@ const Nav = () => {
         <div className="actions">
             <a href="#inicio">INICIO</a>
             <a href="#beneficios">BENEFICIOS</a>
-            {/* <Button variant="outlined" className={classes.button}>Login</Button> */}
             <Link to="/login">
                 <button className="login-btn" >Login</button>
             </Link>
         </div>
     )
 
-    // Drawer actions
-    const DrawerContent = () => (
-        <List className={classes.list}>
-            {["inicio", "beneficios"].map((item, index) => (
-                <ListItem
-                    button
-                    onClick={() => {
-                        toggleDrawer(false)();
-                        window.location.href = `#${item}`;
-                    }}
-                    key={`link-${index}`}
-                >
-                    {item.toUpperCase()}
-                </ListItem>
-            ))}
-            <ListItem button>
-                LOGIN
-            </ListItem>
-        </List>
-    )
+    const navItems = [
+        {
+            title: "inicio",
+            onClick: () => {
+                toggleDrawer(false)();
+                window.location.href = "#inicio";
+            }
+        },
+        {
+            title: "beneficios",
+            onClick: () => {
+                toggleDrawer(false)();
+                window.location.href = "#beneficios";
+            }
+        },
+        {
+            title: "login",
+            onClick: () => {
+                props.history.push("/login");
+            }
+        }
+    ]
 
     return (
         <div className={`${classes.nav} navbar`}>
@@ -95,9 +93,12 @@ const Nav = () => {
                 onClick={toggleDrawer(true)}
             />
             {/* Drawer */}
-            <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-                <DrawerContent />
-            </Drawer>
+            <MyDrawer
+                anchor="left" 
+                open={drawerOpen}
+                onClose={toggleDrawer(false)}
+                items={navItems}
+            />
         </div>
     )
 }

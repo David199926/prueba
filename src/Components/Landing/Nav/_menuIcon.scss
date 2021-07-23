@@ -1,6 +1,7 @@
 .menuIcon {
     display: none;
     width: 2.5rem;
+    cursor: pointer;
     @media screen and (max-width: 576px) {
         display: block;
     }

@@ -23,6 +23,7 @@ export const theme = createTheme({
                 border: `${buttonBorder}px solid transparent`,
                 backgroundClip: "padding-box",
                 backgroundColor: "#0E0E0E",
+                borderRadius: "35px",
                 '&:before': {
                     content: '""',
                     position: "absolute",
@@ -31,6 +32,9 @@ export const theme = createTheme({
                     margin: -buttonBorder,
                     borderRadius: "inherit",
                     background: "linear-gradient(to right, #00E6E3 2.73%, #00FF68 100%)",
+                },
+                '&:hover': {
+                    backgroundColor: "transparent",
                 }
             },
             contained: {
