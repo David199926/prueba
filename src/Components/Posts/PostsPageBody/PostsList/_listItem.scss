@@ -1,0 +1,28 @@
+.list-item {
+    background-color: #ebebeb;
+    margin-bottom: .5rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    /* estilos de la info */
+    .list-info {
+        display: flex;
+        flex-direction: column;
+
+        /* estilos del titulo del item */
+        .item-title {
+            font-weight: 100;
+            font-size: 1.8rem;
+        }
+        /* estilos del id */
+        .item-id {
+            font-size: 1.2rem;
+        }
+    }
+
+    
+}

@@ -24,20 +24,24 @@ const PageNav = (props) => {
     const logOut = (event) => { props.history.push('/login') }
 
     // Drawer actions
-    const draweItems = [
+    const drawerItems = [
         {
             title: "Cerrar sesión",
             onClick: logOut
         }
     ];
 
+    const UserNameComponent = () => (
+        <div className="user-name">
+            <span>Hola <strong>{userName}</strong></span>
+        </div>
+    )
+
     // Componentes de accion del nav
     const Actions = (props) => (
         <div className="nav-actions">
             {/* nombre del usuario que inicio sesion */}
-            <div className="user-name">
-                <span>Hola <strong>{userName}</strong></span>
-            </div>
+            <UserNameComponent/>
             {/* boton para iniciar sesion */}
             <Button
                 variant="outlined"
@@ -65,8 +69,10 @@ const PageNav = (props) => {
                 anchor="left"
                 open={drawerOpen}
                 onClose={toggleDrawer(false)}
-                items={draweItems}
-            />
+                items={drawerItems}
+            >
+                <UserNameComponent/>
+            </MyDrawer>
         </div>
     )
 }

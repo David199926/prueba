@@ -1,16 +1,18 @@
 .pageBody {
     margin-top: 80px;
-    height: 90vh;
     padding: 1rem;
+
+    /* estilos del contenedor principañ*/
     .pageContent {
         box-sizing: border-box;
         width: 100%;
         background-color: white;
-        height: 100%;
+        min-height: 90vh;
         border-radius: 20px;
         color: black;
         padding: 2rem;
     }
+    
     /* estilos del titulo */
     h1 {
         margin-top: 0;

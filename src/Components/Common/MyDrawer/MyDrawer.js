@@ -4,9 +4,15 @@ import './MyDrawer.scss';
 // Material ui
 import { Drawer, List, ListItem } from '@material-ui/core';
 
-const MyDrawer = ({ items, anchor, open, onClose }) => {
+const MyDrawer = (props) => {
+    // props
+    const { items, anchor, open, onClose } = props;
+
     return (
         <Drawer anchor={anchor} open={open} onClose={onClose}>
+            <div className="drawer-header">
+                {props.children}
+            </div>
             <List className="drawer-list">
                 {items.map((item, index) => (
                     <ListItem

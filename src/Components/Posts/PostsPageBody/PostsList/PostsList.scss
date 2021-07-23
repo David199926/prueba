@@ -1,0 +1,15 @@
+/* estilo del titulo de la lista */
+.posts-title {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+
+/* estilos de la lista */
+.posts-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* estilos de los elementos de la lista */
+@import './listItem';
