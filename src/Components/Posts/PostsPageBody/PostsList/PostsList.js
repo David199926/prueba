@@ -23,6 +23,7 @@ const PostsList = (props) => {
                         key={`item-${item.id}`}
                         title={item.title}
                         id={item.id}
+                        active={item.isFav}
                         activeState={activeState}
                         inactiveState={inactiveState}
                         onItemClick={onItemClick(item)}
@@ -35,10 +36,7 @@ const PostsList = (props) => {
 
 const ListItem = (props) => {
     // props
-    const { title, id, onItemClick} = props;
-
-    // State
-    const [ active, setActive ] = useState(false);
+    const { title, id, onItemClick, active} = props;
 
     const activeLabel = props.activeState.title;
     const ActiveIcon = props.activeState.icon;
@@ -49,7 +47,6 @@ const ListItem = (props) => {
     // state toggler
     const toggleState = () => {
         onItemClick(!active);
-        setActive(!active);
     }
 
     return (

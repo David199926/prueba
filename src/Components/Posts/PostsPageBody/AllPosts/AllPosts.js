@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 // My components
 import PostsList from '../PostsList/PostsList';
 // Material ui
 import StarRoundedIcon from '@material-ui/icons/StarRounded';
 import StarOutlineRoundedIcon from '@material-ui/icons/StarOutlineRounded';
+// redux
+import { addToFavorites, removeFromFavorites } from '../../../../redux/index';
+import { connect } from 'react-redux';
 
-const AllPosts = () => {
+const AllPosts = (props) => {
 
-    // State
-    const [ data, setData ] = useState([
-        { id: 1, title: "Post1" },
-        { id: 2, title: "Post2" },
-        { id: 3, title: "Post3" },
-    ])
+    //redux props
+    const { data, addToFavorites, removeFromFavorites } = props;
 
     const itemActiveState = {
         title: "Remover de favoritos",
@@ -26,9 +25,9 @@ const AllPosts = () => {
     const onItemClick = (item) => {
         return (isActive) => {
             if(isActive) {
-                alert( item.title +" ahora está activo");
+                addToFavorites(item.id);
             } else {
-                alert( item.title +" ahora está inactivo");
+                removeFromFavorites(item.id);
             }
         }
     }
@@ -44,4 +43,13 @@ const AllPosts = () => {
     )
 }
 
-export default AllPosts
+// redux
+const mapStateToProps = state => ({
+    data: state.all
+})
+const mapDispatchToProps = dispatch => ({
+    addToFavorites: (id) => dispatch(addToFavorites(id)),
+    removeFromFavorites: (id) => dispatch(removeFromFavorites(id)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllPosts)

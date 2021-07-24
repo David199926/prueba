@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 // My components
 import PostsList from '../PostsList/PostsList';
 // Material ui
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
+import { removeFromFavorites } from '../../../../redux/index';
+import { connect } from 'react-redux';
 
-const FavoritePosts = () => {
+const FavoritePosts = (props) => {
 
-    // State
-    const [ data, setData ] = useState([
-        { id: 4, title: "Post4" },
-        { id: 5, title: "Post5" },
-        { id: 6, title: "Post6" },
-    ])
+    // redux props
+    const { data, removeFromFavorites } = props;
 
     const itemActiveState = {
         title: "Remover de favoritos",
@@ -20,9 +18,8 @@ const FavoritePosts = () => {
     const itemInactiveState = {...itemActiveState};
 
     const onItemClick = (item) => {
-        return (isActive) => {
-            // Remover el item de la lista de favoritos
-            setData(data.filter(post => post.id !== item.id));
+        return () => {
+            removeFromFavorites(item.id);
         }
     }
 
@@ -37,4 +34,13 @@ const FavoritePosts = () => {
     )
 }
 
-export default FavoritePosts
+// redux
+const mapStateToProps = state => ({
+    data: state.favs
+})
+const mapDispatchToProps = dispatch => ({
+    removeFromFavorites: (id) => dispatch(removeFromFavorites(id))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritePosts)
+

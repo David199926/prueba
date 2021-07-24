@@ -1,0 +1,4 @@
+// Redux actions
+export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
+export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
+export const FETCH_ALL_POSTS = 'FETCH_ALL_POSTS';
