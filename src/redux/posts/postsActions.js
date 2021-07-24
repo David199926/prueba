@@ -9,7 +9,7 @@ import {
 import axios from 'axios';
 
 // Posts API
-const API_URL = 'http://waco-api.herokuapp.com/api';
+const API_URL = 'https://waco-api.herokuapp.com/api';
 
 export const addToFavorites = (id) => {
     return {
