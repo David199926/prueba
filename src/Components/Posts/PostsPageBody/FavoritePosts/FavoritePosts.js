@@ -27,6 +27,8 @@ const FavoritePosts = (props) => {
         <PostsList
             title="Posts favoritos"
             data={data}
+            error="" // no hay errores
+            loading={false} // no es lista asincrona
             inactiveState={itemInactiveState}
             activeState={itemActiveState}
             onItemClick={onItemClick}

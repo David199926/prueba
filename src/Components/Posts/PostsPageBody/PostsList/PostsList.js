@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // Styles
 import './PostsList.scss';
 // Material ui
@@ -9,6 +9,8 @@ const PostsList = (props) => {
     const {
         title,
         data,
+        loading,
+        error,
         onItemClick,
         activeState,
         inactiveState
@@ -19,18 +21,23 @@ const PostsList = (props) => {
             <span className="posts-title">{title}</span>
             <ul className="posts-list">
                 {
-                    data.length === 0 ? "No hay datos" :
-                        data.map(item => (
-                            <ListItem
-                                key={`item-${item.id}`}
-                                title={item.title}
-                                id={item.id}
-                                active={item.isFav}
-                                activeState={activeState}
-                                inactiveState={inactiveState}
-                                onItemClick={onItemClick(item)}
-                            />
-                        ))
+                    error !== ""
+                    ? "Error: " + error
+                    : loading
+                    ? "Cargando datos..." :
+                    data.length === 0
+                    ? "No hay datos"
+                    : data.map(item => (
+                        <ListItem
+                            key={`item-${item.id}`}
+                            title={item.title}
+                            id={item.id}
+                            active={item.isFav}
+                            activeState={activeState}
+                            inactiveState={inactiveState}
+                            onItemClick={onItemClick(item)}
+                        />
+                    ))
                 }
             </ul>
         </div>

@@ -6,15 +6,14 @@ import { Grid } from '@material-ui/core';
 import AllPosts from './AllPosts/AllPosts';
 import FavoritePosts from './FavoritePosts/FavoritePosts';
 // redux
-import { useDispatch } from 'react-redux';
-import { fetchAllPosts } from '../../../redux/index';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../../../redux/index';
 
-const PostsPageBody = () => {
-
-    const dispatch = useDispatch();
+const PostsPageBody = ({ fetchPosts }) => {
 
     useEffect(() => {
-        dispatch(fetchAllPosts())
+        // call API for posts
+        fetchPosts();
     }, []);
 
     return (
@@ -37,4 +36,8 @@ const PostsPageBody = () => {
     )
 }
 
-export default PostsPageBody
+const mapDispatchToProps = (dispatch) => ({
+    fetchPosts: () => dispatch(fetchPosts()),
+})
+
+export default connect(null, mapDispatchToProps)(PostsPageBody)

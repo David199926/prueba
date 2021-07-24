@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 const AllPosts = (props) => {
 
     //redux props
-    const { data, addToFavorites, removeFromFavorites } = props;
+    const { data, loading, error, addToFavorites, removeFromFavorites } = props;
 
     const itemActiveState = {
         title: "Remover de favoritos",
@@ -36,6 +36,8 @@ const AllPosts = (props) => {
         <PostsList
             title="Todos"
             data={data}
+            loading={loading}
+            error={error}
             inactiveState={itemInactiveState}
             activeState={itemActiveState}
             onItemClick={onItemClick}
@@ -45,7 +47,9 @@ const AllPosts = (props) => {
 
 // redux
 const mapStateToProps = state => ({
-    data: state.posts.all
+    data: state.posts.all,
+    loading: state.posts.loading,
+    error: state.posts.error,
 })
 const mapDispatchToProps = dispatch => ({
     addToFavorites: (id) => dispatch(addToFavorites(id)),

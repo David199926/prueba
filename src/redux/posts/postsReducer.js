@@ -2,10 +2,14 @@
 import {
     ADD_TO_FAVORITES,
     REMOVE_FROM_FAVORITES,
-    FETCH_ALL_POSTS
+    FETCH_ALL_POSTS,
+    FETCH_ALL_POSTS_SUCCESS,
+    FETCH_ALL_POSTS_FAILURE,
 } from './postsTypes';
 
 const initialState = {
+    loading: false,
+    error: '',
     all: [],
     favs: [],
 }
@@ -32,25 +36,6 @@ const removeFavFromAll = (id, all) => {
         }
     })
 }
-const fetchAllPosts = () => {
-    return [
-        { id: 1, title: "Post1fromStore", isFav: false },
-        { id: 2, title: "Post2fromStore", isFav: false },
-        { id: 3, title: "Post3fromStore", isFav: false },
-        { id: 4, title: "Post4fromStore", isFav: false },
-        { id: 5, title: "Post5fromStore", isFav: false },
-        { id: 6, title: "Post6fromStore", isFav: false },
-        { id: 7, title: "Post7fromStore", isFav: false },
-        { id: 8, title: "Post8fromStore", isFav: false },
-        { id: 9, title: "Post9fromStore", isFav: false },
-        { id: 10, title: "Post10fromStore", isFav: false },
-        { id: 11, title: "Post11fromStore", isFav: false },
-        { id: 12, title: "Post12fromStore", isFav: false },
-        { id: 13, title: "Post13fromStore", isFav: false },
-        { id: 14, title: "Post14fromStore", isFav: false },
-        { id: 15, title: "Post15fromStore", isFav: false },
-    ]
-}
 
 const postsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -67,10 +52,23 @@ const postsReducer = (state = initialState, action) => {
                 all: removeFavFromAll(action.id, state.all),
                 favs: state.favs.filter(fav => fav.id !== action.id)
             }
+        // Async actions
         case FETCH_ALL_POSTS:
             return {
                 ...state,
-                all: fetchAllPosts()
+                loading: true,
+            }
+        case FETCH_ALL_POSTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                all: action.data,
+            }
+        case FETCH_ALL_POSTS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
             }
         default: return state;
     }
