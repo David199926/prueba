@@ -77,7 +77,7 @@ const Login = (props) => {
                     Acceder
                 </Button>
                 {/* Accesos de Facebook y Google */}
-                <ExternalAuth />
+                <ExternalAuth {...props}/>
             </div>
         </div>
     )

@@ -11,6 +11,8 @@ import MyDrawer from '../../Common/MyDrawer/MyDrawer';
 // redux
 import { useDispatch } from 'react-redux';
 import { logOut as logOutAction} from '../../../redux/index';
+// firebase
+import { logOut as logOutFirebase } from '../../../firebase/userAuth';
 
 const PageNav = (props) => {
 
@@ -26,9 +28,15 @@ const PageNav = (props) => {
     }
 
     // logOut fuction
-    const logOut = (event) => {
-        dispatch(logOutAction());
-        props.history.push('/login');
+    const logOut = async () => {
+        logOutFirebase()
+        .then(() => {
+            dispatch(logOutAction());
+            props.history.push('/login');
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     // Drawer actions

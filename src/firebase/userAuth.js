@@ -1,6 +1,6 @@
 import firebase from './firebase-config';
 
-const socialMediaAuth = (provider) => {
+export const socialMediaAuth = (provider) => {
     return firebase.auth().signInWithPopup(provider)
     .then((res) => {
         return res.user;
@@ -10,4 +10,6 @@ const socialMediaAuth = (provider) => {
     })
 }
 
-export default socialMediaAuth;
+export const logOut = async () => {
+    return firebase.auth().signOut;
+}

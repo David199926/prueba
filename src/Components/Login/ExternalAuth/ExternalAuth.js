@@ -9,13 +9,19 @@ import {
  } from '@fortawesome/free-brands-svg-icons'
  // firebase
 import { facebookProvider, googleProvider } from '../../../firebase/authMetods';
-import socialMediaAuth from '../../../firebase/mediaAuth';
+import { socialMediaAuth } from '../../../firebase/userAuth';
+// redux
+import { useDispatch } from 'react-redux';
+import { logIn } from '../../../redux/user/userActions'
 
-const ExternalAuth = () => {
+const ExternalAuth = (props) => {
+
+    const dispatch = useDispatch();
 
     const mediaAuth = (provider) => async () => {
         const res = await socialMediaAuth(provider);
-        console.log(res.uid); 
+        dispatch(logIn(res.uid));
+        props.history.push('/posts');
     }
 
     return (
