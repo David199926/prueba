@@ -6,11 +6,7 @@ import {
 } from './postsTypes';
 
 const initialState = {
-    all: [
-        { id: 1, title: "Post1fromStore", isFav: false },
-        { id: 2, title: "Post2fromStore", isFav: false },
-        { id: 3, title: "Post3fromStore", isFav: false },
-    ],
+    all: [],
     favs: [],
 }
 
@@ -36,6 +32,25 @@ const removeFavFromAll = (id, all) => {
         }
     })
 }
+const fetchAllPosts = () => {
+    return [
+        { id: 1, title: "Post1fromStore", isFav: false },
+        { id: 2, title: "Post2fromStore", isFav: false },
+        { id: 3, title: "Post3fromStore", isFav: false },
+        { id: 4, title: "Post4fromStore", isFav: false },
+        { id: 5, title: "Post5fromStore", isFav: false },
+        { id: 6, title: "Post6fromStore", isFav: false },
+        { id: 7, title: "Post7fromStore", isFav: false },
+        { id: 8, title: "Post8fromStore", isFav: false },
+        { id: 9, title: "Post9fromStore", isFav: false },
+        { id: 10, title: "Post10fromStore", isFav: false },
+        { id: 11, title: "Post11fromStore", isFav: false },
+        { id: 12, title: "Post12fromStore", isFav: false },
+        { id: 13, title: "Post13fromStore", isFav: false },
+        { id: 14, title: "Post14fromStore", isFav: false },
+        { id: 15, title: "Post15fromStore", isFav: false },
+    ]
+}
 
 const postsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -51,6 +66,11 @@ const postsReducer = (state = initialState, action) => {
                 ...state,
                 all: removeFavFromAll(action.id, state.all),
                 favs: state.favs.filter(fav => fav.id !== action.id)
+            }
+        case FETCH_ALL_POSTS:
+            return {
+                ...state,
+                all: fetchAllPosts()
             }
         default: return state;
     }

@@ -4,11 +4,12 @@
     font-weight: 400;
 }
 
-
 /* estilos de la lista */
 .posts-list {
     list-style-type: none;
-    padding: 0;
+    padding: 0 2rem 0 0;
+    height: 35rem;
+    overflow: auto;
 }
 
 /* estilos de los elementos de la lista */

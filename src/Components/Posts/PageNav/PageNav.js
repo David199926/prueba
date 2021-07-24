@@ -8,6 +8,9 @@ import menu from '../../../Resources/Icons/Menu.svg';
 import { Button } from '@material-ui/core';
 // My components
 import MyDrawer from '../../Common/MyDrawer/MyDrawer';
+// redux
+import { useDispatch } from 'react-redux';
+import { logOut as logOutAction} from '../../../redux/index';
 
 const PageNav = (props) => {
 
@@ -15,13 +18,18 @@ const PageNav = (props) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [userName, setUserName] = useState("Felipe");
 
+    const dispatch = useDispatch();
+
     // Toggle drawer
     const toggleDrawer = (open) => (event) => {
         setDrawerOpen(open);
     }
 
     // logOut fuction
-    const logOut = (event) => { props.history.push('/login') }
+    const logOut = (event) => {
+        dispatch(logOutAction());
+        props.history.push('/login');
+    }
 
     // Drawer actions
     const drawerItems = [

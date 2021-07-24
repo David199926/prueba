@@ -13,6 +13,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import MyTextField from './MyTextField';
 import PasswordInput from './Password';
 import ExternalAuth from './ExternalAuth/ExternalAuth';
+// redux
+import { useDispatch } from 'react-redux';
+import { logIn as logInAction } from '../../redux/index';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +29,16 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Login = (props) => {
+
+    // Hooks
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    // Login function
+    const logIn = () => {
+        dispatch(logInAction('123'));
+        props.history.push('/posts');
+    }
 
     return (
         <div className="login-page">
@@ -54,7 +66,7 @@ const Login = (props) => {
                     variant="contained"
                     className={classes.button}
                     type="submit"
-                    onClick={ e => props.history.push('/posts')}
+                    onClick={logIn}
                 >
                     Acceder
                 </Button>

@@ -36,7 +36,7 @@ const FavoritePosts = (props) => {
 
 // redux
 const mapStateToProps = state => ({
-    data: state.favs
+    data: state.posts.favs
 })
 const mapDispatchToProps = dispatch => ({
     removeFromFavorites: (id) => dispatch(removeFromFavorites(id))

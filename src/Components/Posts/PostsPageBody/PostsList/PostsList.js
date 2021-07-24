@@ -18,17 +18,20 @@ const PostsList = (props) => {
         <div>
             <span className="posts-title">{title}</span>
             <ul className="posts-list">
-                {data.map( item => (
-                    <ListItem
-                        key={`item-${item.id}`}
-                        title={item.title}
-                        id={item.id}
-                        active={item.isFav}
-                        activeState={activeState}
-                        inactiveState={inactiveState}
-                        onItemClick={onItemClick(item)}
-                    />
-                ))}
+                {
+                    data.length === 0 ? "No hay datos" :
+                        data.map(item => (
+                            <ListItem
+                                key={`item-${item.id}`}
+                                title={item.title}
+                                id={item.id}
+                                active={item.isFav}
+                                activeState={activeState}
+                                inactiveState={inactiveState}
+                                onItemClick={onItemClick(item)}
+                            />
+                        ))
+                }
             </ul>
         </div>
     )
@@ -36,11 +39,11 @@ const PostsList = (props) => {
 
 const ListItem = (props) => {
     // props
-    const { title, id, onItemClick, active} = props;
+    const { title, id, onItemClick, active } = props;
 
     const activeLabel = props.activeState.title;
     const ActiveIcon = props.activeState.icon;
-    
+
     const inactiveLabel = props.inactiveState.title;
     const InactiveIcon = props.inactiveState.icon;
 
@@ -62,7 +65,7 @@ const ListItem = (props) => {
                     title={active ? activeLabel : inactiveLabel}
                 >
                     {
-                        active ? <ActiveIcon/> : <InactiveIcon/>
+                        active ? <ActiveIcon /> : <InactiveIcon />
                     }
                 </IconButton>
             </div>

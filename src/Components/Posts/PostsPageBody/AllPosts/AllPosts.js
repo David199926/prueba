@@ -45,7 +45,7 @@ const AllPosts = (props) => {
 
 // redux
 const mapStateToProps = state => ({
-    data: state.all
+    data: state.posts.all
 })
 const mapDispatchToProps = dispatch => ({
     addToFavorites: (id) => dispatch(addToFavorites(id)),
