@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // React Router
 import { Link } from 'react-router-dom';
 // Styles
@@ -29,10 +29,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Login = (props) => {
-
     // Hooks
     const classes = useStyles();
     const dispatch = useDispatch();
+    // State
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     // Login function
     const logIn = () => {
@@ -50,14 +52,18 @@ const Login = (props) => {
                 <div className="login-inputs">
                     {/* Nombre de usuario */}
                     <MyTextField
-                        label="Nombre de usuario"
+                        label="Correo"
                         fullWidth
                         variant="outlined"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
                     {/* Contraseña de usuario */}
                     <PasswordInput
                         error={""}
                         helperText={""}
+                        password={password}
+                        onChange={e => setPassword(e.target.value)}
                     />
                     {/* Contraseña de usuario */}
                     <a href="#" className="password-link">¿Olvidaste tu contraseña?</a>
