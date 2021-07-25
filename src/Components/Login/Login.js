@@ -52,22 +52,22 @@ const Login = (props) => {
         resetErrors();
 
         logInFirebase(email, password)
-        .then((res) => {
-            dispatch(logInAction(res.user.uid));
-            props.history.push('/posts');
-        })
-        .catch((err) => {
-            console.log(err);
-            switch (err.code){
-                case "auth/wrong-password":
-                    setPasswordError("Contraseña incorrecta");
-                    break;
-                case "auth/invalid-email":
-                    setEmailError("Correo inválido");
-                    break;
-                default: setFBAccessError(err.message);
-            }
-        })
+            .then((res) => {
+                dispatch(logInAction(res.user.uid));
+                props.history.push('/posts');
+            })
+            .catch((err) => {
+                console.log(err);
+                switch (err.code) {
+                    case "auth/wrong-password":
+                        setPasswordError("Contraseña incorrecta");
+                        break;
+                    case "auth/invalid-email":
+                        setEmailError("Correo inválido");
+                        break;
+                    default: setFBAccessError(err.message);
+                }
+            })
     }
 
     return (
@@ -75,44 +75,48 @@ const Login = (props) => {
             {/* regresar a pagina de inicio */}
             <LandingLink />
 
-            <form className="login-panel" onSubmit={e => logIn(e)} action="">
+            <div className="login-panel" >
                 <h1 className="login-title">Inicia <strong>Sesión</strong></h1>
-                <div className="login-inputs">
-                    {/* Nombre de usuario */}
-                    <MyTextField
-                        label="Correo"
-                        fullWidth
-                        variant="outlined"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        type="email"
-                        error={emailError !== ""}
-                        helperText={emailError}
-                    />
-                    {/* Contraseña de usuario */}
-                    <PasswordInput
-                        error={passwordError !== ""}
-                        helperText={passwordError}
-                        password={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                    {/* Link de registro */}
-                    <Link className="form-link" to="/signin">¿No tienes cuenta? Registrate aquí</Link>
-                </div>
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    type="submit"
-                >
-                    Acceder
-                </Button>
+                <form onSubmit={e => logIn(e)} action="" autoComplete="on">
+                    <div className="login-inputs">
+                        {/* Nombre de usuario */}
+                        <MyTextField
+                            id="user-email"
+                            label="Correo"
+                            name="email"
+                            fullWidth
+                            variant="outlined"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            type="email"
+                            error={emailError !== ""}
+                            helperText={emailError}
+                        />
+                        {/* Contraseña de usuario */}
+                        <PasswordInput
+                            error={passwordError !== ""}
+                            helperText={passwordError}
+                            password={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        {/* Link de registro */}
+                        <Link className="form-link" to="/signin">¿No tienes cuenta? Registrate aquí</Link>
+                    </div>
+                    <Button
+                        variant="contained"
+                        className={classes.button}
+                        type="submit"
+                    >
+                        Acceder
+                    </Button>
+                </form>
                 {
                     FBaccessError !== "" &&
                     <span className="error-message">Error: {FBaccessError}</span>
                 }
                 {/* Accesos de Facebook y Google */}
-                <ExternalAuth {...props}/>
-            </form>
+                <ExternalAuth {...props} />
+            </div>
         </div>
     )
 }
@@ -123,8 +127,8 @@ const LandingLink = () => {
             className="landing-link"
             to="/"
         >
-            <img src={arrow} alt="logo" className="arrow-link"/>
-            <img src={logo} alt="logo" className="logo-link"/>
+            <img src={arrow} alt="logo" className="arrow-link" />
+            <img src={logo} alt="logo" className="logo-link" />
         </Link>
     )
 }

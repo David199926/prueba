@@ -52,13 +52,12 @@ export const theme = createTheme({
         },
         MuiTextField: {
             root: {
-                color: "white",
             },
         }
     },
     props: {
         MuiButtonBase: {
-          disableRipple: true,
+            disableRipple: true,
         },
     },
 });

@@ -1,22 +1,10 @@
 import { TextField } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
+import { styles, inputColor } from './MyTextFieldStyles'
 
-const inputColor = "#bdbdbd";
 // Styles
 const useStyles = makeStyles((theme) => ({
-    textfield: {
-        '& label': {
-            color: inputColor,
-        },
-        '& .MuiOutlinedInput-root:not(.Mui-error)': {
-            '& fieldset, &:hover fieldset': {
-                borderColor: inputColor,
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: theme.palette.primary.main,
-            },
-        }
-    },
+    textfield: styles(theme),
     input: {
         color: inputColor
     }
@@ -28,11 +16,13 @@ const MyTextField = (props) => {
 
     return (
         <TextField
+            id={props.id}
             className={classes.textfield}
             InputProps={{
                 className: classes.input,
                 type: props.type,
-                autoComplete: "on"
+                autoComplete: "on",
+                name: props.name
             }}
             {...props}
         />

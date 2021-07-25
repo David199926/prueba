@@ -11,20 +11,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import { makeStyles } from "@material-ui/core/styles";
+import { styles, inputColor } from '../MyTextField/MyTextFieldStyles'
 
-const inputColor = "#bdbdbd";
 // Styles
 const useStyles = makeStyles((theme) => ({
-    textfield: {
-        '& .MuiOutlinedInput-root:not(.Mui-error)': {
-            '& fieldset, &:hover fieldset': {
-                borderColor: inputColor,
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: theme.palette.primary.main,
-            },
-        }
-    },
+    textfield: styles(theme),
     input: {
         color: inputColor
     },
@@ -36,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 function PasswordInput({ password, onChange, error, helperText }) {
 
     const classes = useStyles();
-
     // state
     const [showPassword, setShowPassword] = useState(false);
     // handle state change
