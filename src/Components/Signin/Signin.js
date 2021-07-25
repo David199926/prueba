@@ -12,6 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 // My components
 import MyTextField from '../Common/MyTextField/MyTextField';
 import PasswordInput from '../Common/Password/Password';
+// firebase
+import { register } from '../../firebase/userAuth';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -28,11 +30,14 @@ const useStyles = makeStyles((theme) => ({
 const Signin = () => {
 
     const [registered, setRegistered] = useState(false);
+    const [signinError, setSigninError] = useState("");
 
     const pageContent = () => {
-        return registered ?
-        <SuccessMessage /> :
-        <SignInForm setRegistered={setRegistered}/>
+        return signinError !== "" ? // Hubo error
+            <SigninMessage error errorMessage={signinError}/> :
+            registered ? // registro exitoso
+            <SigninMessage /> : // aun no se registra
+            <SignInForm setRegistered={setRegistered} setSigninError={setSigninError} />
     }
 
     return (
@@ -41,7 +46,7 @@ const Signin = () => {
             <LandingLink />
             <div className="signin-panel">
                 <h1 className="signin-title"><strong>Registrate</strong></h1>
-                { pageContent() }
+                {pageContent()}
             </div>
         </div>
     )
@@ -60,7 +65,7 @@ const LandingLink = () => {
 }
 
 // Formulario de registro
-const SignInForm = ({ setRegistered }) => {
+const SignInForm = ({ setRegistered, setSigninError }) => {
     // Hooks
     const classes = useStyles();
     // State
@@ -69,7 +74,13 @@ const SignInForm = ({ setRegistered }) => {
 
     // Siginn function
     const signIn = () => {
-        setRegistered(true)
+        register(email, password)
+        .then(() => {
+            setRegistered(true)
+        })
+        .catch((err) => {
+            setSigninError(err.message)
+        })
     }
 
     return (
@@ -104,9 +115,20 @@ const SignInForm = ({ setRegistered }) => {
     )
 }
 
-const SuccessMessage = () => (
-    <div className="succes-signin-message">
-        <h2 className="title">Usuario registrado exitosamente</h2>
+const SigninMessage = ({ error, errorMessage }) => (
+    
+    <div className="signin-message">
+        {/* titulo de error */}
+        {
+            !error ?
+            <h2 className="title">Usuario registrado exitosamente</h2> :
+            <h2 className="title">Ha ocurrido un error</h2>
+        }
+        {/* mensaje de error */}
+        {
+            error ? 
+            <span className="error-message">{errorMessage}</span> : null
+        }
         <Link className="form-link" to="/login">Regresar a inicio de sesión</Link>
     </div>
 )

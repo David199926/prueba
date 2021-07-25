@@ -10,6 +10,10 @@ export const socialMediaAuth = (provider) => {
     })
 }
 
+export const register = async (email, password) => {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+}
+
 export const logOut = async () => {
     return firebase.auth().signOut;
 }
