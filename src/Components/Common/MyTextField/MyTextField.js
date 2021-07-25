@@ -30,7 +30,8 @@ const MyTextField = (props) => {
         <TextField
             className={classes.textfield}
             InputProps={{
-                className: classes.input
+                className: classes.input,
+                type: props.type
             }}
             {...props}
         />

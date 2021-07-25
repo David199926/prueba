@@ -2,6 +2,7 @@ import './App.css';
 // My Components
 import Landing from './Components/Landing/Landing';
 import Login from './Components/Login/Login';
+import Signin from './Components/Signin/Signin';
 import Posts from './Components/Posts/Posts';
 // React router dom
 import {
@@ -26,6 +27,8 @@ function App() {
             <Route exact path="/" component={Landing} />
             {/* Login page */}
             <Route exact path="/login" component={Login} />
+            {/* Signin page */}
+            <Route exact path="/signin" component={Signin} />
             {/* Posts page */}
             <Route exact path="/posts" component={Posts} />
           </Switch>

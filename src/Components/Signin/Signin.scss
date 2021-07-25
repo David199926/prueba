@@ -1,4 +1,4 @@
-.login-page {
+.signin-page {
     position: relative;
     height: 100vh;
     background-size: contain;
@@ -9,10 +9,10 @@
     background-position: center center;
 }
 
-.login-panel {
+.signin-panel {
     background-color: #151515;
-    width: 100%;
     height: fit-content;
+    max-height: 30rem;
     border-radius: 15px;
     padding: 50px 30px;
     padding-bottom: 30px;
@@ -25,37 +25,40 @@
     -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.4); 
     box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.4);
 
-    //breakpoints
+    // breakpoints
     @media screen and (max-width: 576px) {width: 90%;} // Small
     @media screen and (min-width: 576px) and (max-width: 768px) {width: 30rem;} // Medium
     @media screen and (min-width: 768px) {width: 40rem;} // Medium
 
     /* estilos del título */
-    h1.login-title {
+    h1.signin-title {
         margin-top: 0;
         margin-bottom: 2rem;
         font-weight: 100;
     }
 
     /* contenedor de inputs */
-    .login-inputs {
+    .signin-inputs {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
         box-sizing: border-box;
-        padding-bottom: 2rem;
     }
-}
 
-/* estilos del enlace de recuperar contraseña */
-.form-link {
-    text-decoration: none;
-    color: #00F1AC;
-    font-weight: 100;
-    align-self: flex-start;
+    // mensaje de exito despues de registro
+    .succes-signin-message {
+        display: flex;
+        flex-direction: column;
+        .title {
+            margin-top: 0;
+            font-size: 2rem;
+            font-weight: 100;
+        }
+        .form-link {
+            align-self: center;
+        }
+    }
+    
 }
-
-/* estilos del landing link */
-@import './landingLink';
