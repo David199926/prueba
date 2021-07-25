@@ -8,11 +8,11 @@ const useStyles = makeStyles((theme) => ({
         '& label': {
             color: inputColor,
         },
-        '& .MuiOutlinedInput-root': {
+        '& .MuiOutlinedInput-root:not(.Mui-error)': {
             '& fieldset, &:hover fieldset': {
                 borderColor: inputColor,
             },
-            '&.Mui-focused:hover fieldset': {
+            '&.Mui-focused fieldset': {
                 borderColor: theme.palette.primary.main,
             },
         }
@@ -31,7 +31,8 @@ const MyTextField = (props) => {
             className={classes.textfield}
             InputProps={{
                 className: classes.input,
-                type: props.type
+                type: props.type,
+                autoComplete: "on"
             }}
             {...props}
         />

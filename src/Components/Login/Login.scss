@@ -47,6 +47,12 @@
         box-sizing: border-box;
         padding-bottom: 2rem;
     }
+    // mensaje de error
+    .error-message {
+        font-weight: 100;
+        color: #ff3657;
+        margin-top: 1rem;
+    }
 }
 
 /* estilos del enlace de recuperar contraseña */

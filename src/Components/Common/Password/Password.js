@@ -16,11 +16,11 @@ const inputColor = "#bdbdbd";
 // Styles
 const useStyles = makeStyles((theme) => ({
     textfield: {
-        '& .MuiOutlinedInput-root': {
+        '& .MuiOutlinedInput-root:not(.Mui-error)': {
             '& fieldset, &:hover fieldset': {
                 borderColor: inputColor,
             },
-            '&.Mui-focused:hover fieldset': {
+            '&.Mui-focused fieldset': {
                 borderColor: theme.palette.primary.main,
             },
         }

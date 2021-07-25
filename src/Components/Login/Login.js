@@ -16,6 +16,8 @@ import ExternalAuth from './ExternalAuth/ExternalAuth';
 // redux
 import { useDispatch } from 'react-redux';
 import { logIn as logInAction } from '../../redux/index';
+// firebase
+import { logIn as logInFirebase } from '../../firebase/userAuth';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -34,12 +36,38 @@ const Login = (props) => {
     const dispatch = useDispatch();
     // State
     const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("")
+    const [FBaccessError, setFBAccessError] = useState("");
 
+    const resetErrors = () => {
+        setFBAccessError("");
+        setEmailError("");
+        setPasswordError("");
+    }
     // Login function
-    const logIn = () => {
-        dispatch(logInAction('123'));
-        props.history.push('/posts');
+    const logIn = (e) => {
+        e.preventDefault();
+        resetErrors();
+
+        logInFirebase(email, password)
+        .then((res) => {
+            dispatch(logInAction(res.user.uid));
+            props.history.push('/posts');
+        })
+        .catch((err) => {
+            console.log(err);
+            switch (err.code){
+                case "auth/wrong-password":
+                    setPasswordError("Contraseña incorrecta");
+                    break;
+                case "auth/invalid-email":
+                    setEmailError("Correo inválido");
+                    break;
+                default: setFBAccessError(err.message);
+            }
+        })
     }
 
     return (
@@ -47,7 +75,7 @@ const Login = (props) => {
             {/* regresar a pagina de inicio */}
             <LandingLink />
 
-            <div className="login-panel">
+            <form className="login-panel" onSubmit={e => logIn(e)} action="">
                 <h1 className="login-title">Inicia <strong>Sesión</strong></h1>
                 <div className="login-inputs">
                     {/* Nombre de usuario */}
@@ -58,11 +86,13 @@ const Login = (props) => {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         type="email"
+                        error={emailError !== ""}
+                        helperText={emailError}
                     />
                     {/* Contraseña de usuario */}
                     <PasswordInput
-                        error={""}
-                        helperText={""}
+                        error={passwordError !== ""}
+                        helperText={passwordError}
                         password={password}
                         onChange={e => setPassword(e.target.value)}
                     />
@@ -73,13 +103,16 @@ const Login = (props) => {
                     variant="contained"
                     className={classes.button}
                     type="submit"
-                    onClick={logIn}
                 >
                     Acceder
                 </Button>
+                {
+                    FBaccessError !== "" &&
+                    <span className="error-message">Error: {FBaccessError}</span>
+                }
                 {/* Accesos de Facebook y Google */}
                 <ExternalAuth {...props}/>
-            </div>
+            </form>
         </div>
     )
 }

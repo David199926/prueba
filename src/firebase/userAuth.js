@@ -1,5 +1,30 @@
 import firebase from './firebase-config';
 
+/**
+ * Registro por medio de correo
+ * @param {string} email 
+ * @param {string} password 
+ * @returns 
+ */
+export const register = async (email, password) => {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+}
+
+/**
+ * Inicio de sesion con correo y contraseña
+ * @param {string} email 
+ * @param {string} password 
+ * @returns 
+ */
+export const logIn = async (email, password) => {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+}
+
+/**
+ * Autenticacion por medio de redes sociales
+ * @param {*} provider 
+ * @returns 
+ */
 export const socialMediaAuth = (provider) => {
     return firebase.auth().signInWithPopup(provider)
     .then((res) => {
@@ -10,10 +35,10 @@ export const socialMediaAuth = (provider) => {
     })
 }
 
-export const register = async (email, password) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
-}
-
+/**
+ * Cerrar sesion
+ * @returns 
+ */
 export const logOut = async () => {
     return firebase.auth().signOut;
 }
