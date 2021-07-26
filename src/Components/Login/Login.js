@@ -41,6 +41,36 @@ const Login = (props) => {
     const [passwordError, setPasswordError] = useState("")
     const [FBaccessError, setFBAccessError] = useState("");
 
+    const checkEmpty = () => {
+        let ok = true;
+        if (email === "") {
+            setEmailError("Campo requerido")
+            ok = false;
+        }
+        if (password === "") {
+            setPasswordError("Campo requerido")
+            ok = false;
+        }
+        return ok;
+    }
+    const fireBaseLogin = () => {
+        logInFirebase(email, password)
+        .then((res) => {
+            dispatch(logInAction(res.user.uid));
+            props.history.push('/posts');
+        })
+        .catch((err) => {
+            switch (err.code) {
+                case "auth/wrong-password":
+                    setPasswordError("Contraseña incorrecta");
+                    break;
+                case "auth/invalid-email":
+                    setEmailError("Correo inválido");
+                    break;
+                default: setFBAccessError(err.message);
+            }
+        })
+    }
     const resetErrors = () => {
         setFBAccessError("");
         setEmailError("");
@@ -50,23 +80,10 @@ const Login = (props) => {
     const logIn = (e) => {
         e.preventDefault();
         resetErrors();
-
-        logInFirebase(email, password)
-            .then((res) => {
-                dispatch(logInAction(res.user.uid));
-                props.history.push('/posts');
-            })
-            .catch((err) => {
-                switch (err.code) {
-                    case "auth/wrong-password":
-                        setPasswordError("Contraseña incorrecta");
-                        break;
-                    case "auth/invalid-email":
-                        setEmailError("Correo inválido");
-                        break;
-                    default: setFBAccessError(err.message);
-                }
-            })
+        // Empty fields check
+        if (!checkEmpty()) return false;
+        // firebase check
+        fireBaseLogin();
     }
 
     return (
@@ -81,6 +98,7 @@ const Login = (props) => {
                         {/* Nombre de usuario */}
                         <MyTextField
                             id="user-email"
+                            data-testid="user-email"
                             label="Correo"
                             name="email"
                             fullWidth
@@ -93,6 +111,8 @@ const Login = (props) => {
                         />
                         {/* Contraseña de usuario */}
                         <PasswordInput
+                            id="user-password"
+                            data-testid="user-password"
                             error={passwordError !== ""}
                             helperText={passwordError}
                             password={password}
@@ -105,6 +125,7 @@ const Login = (props) => {
                         variant="contained"
                         className={classes.button}
                         type="submit"
+                        data-testid="login"
                     >
                         Acceder
                     </Button>
