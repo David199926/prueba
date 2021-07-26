@@ -10,7 +10,7 @@ import { Button } from '@material-ui/core';
 import MyDrawer from '../../Common/MyDrawer/MyDrawer';
 // redux
 import { useDispatch } from 'react-redux';
-import { logOut as logOutAction} from '../../../redux/index';
+import { logOut as logOutAction, flushAllPosts, flushFavPosts } from '../../../redux/index';
 // firebase
 import { logOut as logOutFirebase } from '../../../firebase/userAuth';
 
@@ -32,6 +32,8 @@ const PageNav = (props) => {
         logOutFirebase()
         .then(() => {
             dispatch(logOutAction());
+            dispatch(flushAllPosts());
+            dispatch(flushFavPosts());
             props.history.push('/login');
         })
         .catch(err => {

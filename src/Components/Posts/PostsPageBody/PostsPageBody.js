@@ -7,13 +7,15 @@ import AllPosts from './AllPosts/AllPosts';
 import FavoritePosts from './FavoritePosts/FavoritePosts';
 // redux
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../../redux/index';
+import { fetchPosts, fetchUserFavs } from '../../../redux/index';
 
-const PostsPageBody = ({ fetchPosts }) => {
+const PostsPageBody = ({ userId, fetchAllPosts, fetchUserFavs }) => {
 
     useEffect(() => {
         // call API for posts
-        fetchPosts();
+        fetchAllPosts();
+        // bring user favs from db
+        fetchUserFavs(userId);
     }, []);
 
     return (
@@ -36,8 +38,12 @@ const PostsPageBody = ({ fetchPosts }) => {
     )
 }
 
+const mapStateToProps = state => ({
+    userId: state.user.userId,
+})
 const mapDispatchToProps = (dispatch) => ({
-    fetchPosts: () => dispatch(fetchPosts()),
+    fetchAllPosts: () => dispatch(fetchPosts()),
+    fetchUserFavs: (userId) => dispatch(fetchUserFavs(userId)),
 })
 
-export default connect(null, mapDispatchToProps)(PostsPageBody)
+export default connect(mapStateToProps, mapDispatchToProps)(PostsPageBody)

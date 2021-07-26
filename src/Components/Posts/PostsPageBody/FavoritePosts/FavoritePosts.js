@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 const FavoritePosts = (props) => {
 
     // redux props
-    const { data, removeFromFavorites } = props;
+    const { data, userId, removeFromFavorites } = props;
 
     const itemActiveState = {
         title: "Remover de favoritos",
@@ -19,7 +19,7 @@ const FavoritePosts = (props) => {
 
     const onItemClick = (item) => {
         return () => {
-            removeFromFavorites(item.id);
+            removeFromFavorites(item.id, userId, true);
         }
     }
 
@@ -38,10 +38,11 @@ const FavoritePosts = (props) => {
 
 // redux
 const mapStateToProps = state => ({
-    data: state.posts.favs
+    data: state.posts.favs.data,
+    userId: state.user.userId,
 })
 const mapDispatchToProps = dispatch => ({
-    removeFromFavorites: (id) => dispatch(removeFromFavorites(id))
+    removeFromFavorites: (id, userId, persist) => dispatch(removeFromFavorites(id, userId, persist)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoritePosts)

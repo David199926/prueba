@@ -1,3 +1,5 @@
+// firebase operations
+import { updateUserFavs } from '../../firebase/usersCollection'
 // Action constants
 import {
     ADD_TO_FAVORITES,
@@ -5,13 +7,24 @@ import {
     FETCH_ALL_POSTS,
     FETCH_ALL_POSTS_SUCCESS,
     FETCH_ALL_POSTS_FAILURE,
+    FETCH_FAVORITE_POSTS,
+    FETCH_FAVORITE_POSTS_SUCCESS,
+    FETCH_FAVORITE_POSTS_FAILURE,
+    FLUSH_ALL_POSTS,
+    FLUSH_FAVORITE_POSTS
 } from './postsTypes';
 
 const initialState = {
-    loading: false,
-    error: '',
-    all: [],
-    favs: [],
+    all: {
+        loading: false,
+        error: '',
+        data: []
+    },
+    favs: {
+        loading: false,
+        error: '',
+        data: []
+    }
 }
 
 // Utilities
@@ -40,35 +53,116 @@ const removeFavFromAll = (id, all) => {
 const postsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_FAVORITES:
-            const { selectedPost, updatedAll } = findSelectedPost(action.id, state.all);
+            const { selectedPost, updatedAll } = findSelectedPost(action.id, state.all.data);
+            var updatedFavs = selectedPost === null ? state.favs.data : [...state.favs.data, selectedPost];
+            if (action.persist) updateUserFavs(action.userId, updatedFavs);
             return {
                 ...state,
-                all: updatedAll,
-                favs: selectedPost === null ? state.favs : [...state.favs, selectedPost]
+                all: {
+                    ...state.all,
+                    data: updatedAll,
+                },
+                favs: {
+                    ...state.favs,
+                    data: updatedFavs
+                }
             }
+
         case REMOVE_FROM_FAVORITES:
+            var updatedFavs = state.favs.data.filter(fav => fav.id !== action.id);
+            if (action.persist) updateUserFavs(action.userId, updatedFavs);
             return {
                 ...state,
-                all: removeFavFromAll(action.id, state.all),
-                favs: state.favs.filter(fav => fav.id !== action.id)
+                all: {
+                    ...state.all,
+                    data: removeFavFromAll(action.id, state.all.data),
+                },
+                favs: {
+                    ...state.favs,
+                    data: state.favs.data.filter(fav => fav.id !== action.id)
+                }
             }
-        // Async actions
+
+        case FETCH_FAVORITE_POSTS:
+            return {
+                ...state,
+                favs: {
+                    ...state.favs,
+                    loading: true,
+                }
+            }
+
+        case FETCH_FAVORITE_POSTS_SUCCESS:
+            return {
+                all: {
+                    ...state.all,
+                    data: state.all.data.map(post => ({
+                        ...post,
+                        isFav: action.ids.includes(post.id), 
+                    }))
+                },
+                favs: {
+                    ...state.favs,
+                    loading: false,
+                    data: state.all.data.filter(post => action.ids.includes(post.id)),
+                }
+            }
+
+        case FETCH_FAVORITE_POSTS_FAILURE:
+            return {
+                ...state,
+                favs: {
+                    ...state.favs,
+                    loading: false,
+                    error: action.error,
+                }
+            }
+
         case FETCH_ALL_POSTS:
             return {
                 ...state,
-                loading: true,
+                all: {
+                    ...state.all,
+                    loading: true,
+                }
             }
+
         case FETCH_ALL_POSTS_SUCCESS:
             return {
                 ...state,
-                loading: false,
-                all: action.data,
+                all: {
+                    ...state.all,
+                    loading: false,
+                    data: action.data,
+                }
             }
+
         case FETCH_ALL_POSTS_FAILURE:
             return {
                 ...state,
-                loading: false,
-                error: action.error,
+                all: {
+                    ...state.all,
+                    loading: false,
+                    error: action.error,
+                }
+            }
+        
+        case FLUSH_ALL_POSTS:
+            return {
+                ...state,
+                all: {
+                    ...state.all,
+                    data: []
+                }
+            }
+
+        case FLUSH_FAVORITE_POSTS: 
+            return {
+                ...state,
+                favs: {
+                    ...state.favs,
+                    data: []
+                }
             }
         default: return state;
     }

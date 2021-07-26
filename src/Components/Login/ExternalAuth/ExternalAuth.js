@@ -18,10 +18,19 @@ const ExternalAuth = (props) => {
 
     const dispatch = useDispatch();
 
-    const mediaAuth = (provider) => async () => {
-        const res = await socialMediaAuth(provider);
-        dispatch(logIn(res.uid));
-        props.history.push('/posts');
+    const mediaAuth = (provider) => () => {
+        socialMediaAuth(provider).
+        then((res) => {
+            dispatch(logIn(res.user.uid));
+            props.history.push('/posts');
+        })
+        .catch((err) => {
+            switch(err.code) {
+                case "auth/popup-closed-by-user":
+                    break;
+                default: props.setFBAccessError(err.message);
+            }
+        })
     }
 
     return (

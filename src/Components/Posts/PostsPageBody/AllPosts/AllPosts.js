@@ -7,11 +7,21 @@ import StarOutlineRoundedIcon from '@material-ui/icons/StarOutlineRounded';
 // redux
 import { addToFavorites, removeFromFavorites } from '../../../../redux/index';
 import { connect } from 'react-redux';
+// firebase
+import { updateUserFavs } from '../../../../firebase/usersCollection'
 
 const AllPosts = (props) => {
 
     //redux props
-    const { data, loading, error, addToFavorites, removeFromFavorites } = props;
+    const {
+        userId,
+        data,
+        favs,
+        loading,
+        error,
+        addToFavorites,
+        removeFromFavorites
+    } = props;
 
     const itemActiveState = {
         title: "Remover de favoritos",
@@ -25,9 +35,11 @@ const AllPosts = (props) => {
     const onItemClick = (item) => {
         return (isActive) => {
             if(isActive) {
-                addToFavorites(item.id);
+                // añadir a favoritos
+                addToFavorites(item.id, userId, true)
             } else {
-                removeFromFavorites(item.id);
+                // remover de favoritos
+                removeFromFavorites(item.id, userId, true)
             }
         }
     }
@@ -47,13 +59,15 @@ const AllPosts = (props) => {
 
 // redux
 const mapStateToProps = state => ({
-    data: state.posts.all,
-    loading: state.posts.loading,
-    error: state.posts.error,
+    data: state.posts.all.data,
+    favs: state.posts.favs.data,
+    loading: state.posts.all.loading,
+    error: state.posts.all.error,
+    userId: state.user.userId,
 })
 const mapDispatchToProps = dispatch => ({
-    addToFavorites: (id) => dispatch(addToFavorites(id)),
-    removeFromFavorites: (id) => dispatch(removeFromFavorites(id)),
+    addToFavorites: (id, userId, persist) => dispatch(addToFavorites(id, userId, persist)),
+    removeFromFavorites: (id, userId, persist) => dispatch(removeFromFavorites(id, userId, persist)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllPosts)

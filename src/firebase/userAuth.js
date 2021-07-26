@@ -1,5 +1,5 @@
-import firebase from './firebase-config';
-
+import firebase from "firebase/app";
+import "firebase/auth";
 /**
  * Registro por medio de correo
  * @param {string} email 
@@ -27,12 +27,6 @@ export const logIn = async (email, password) => {
  */
 export const socialMediaAuth = (provider) => {
     return firebase.auth().signInWithPopup(provider)
-    .then((res) => {
-        return res.user;
-    })
-    .catch((err) => {
-        return err;
-    })
 }
 
 /**

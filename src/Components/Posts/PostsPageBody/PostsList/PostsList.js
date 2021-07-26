@@ -70,6 +70,7 @@ const ListItem = (props) => {
                     color="primary"
                     onClick={toggleState}
                     title={active ? activeLabel : inactiveLabel}
+                    className="item-icon"
                 >
                     {
                         active ? <ActiveIcon /> : <InactiveIcon />

@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 // Styles
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from './theme';
+// firebase initialization
+import './firebase/firebase-config'
 
 ReactDOM.render(
   <React.StrictMode>

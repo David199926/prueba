@@ -57,7 +57,6 @@ const Login = (props) => {
                 props.history.push('/posts');
             })
             .catch((err) => {
-                console.log(err);
                 switch (err.code) {
                     case "auth/wrong-password":
                         setPasswordError("Contraseña incorrecta");
@@ -115,7 +114,7 @@ const Login = (props) => {
                     <span className="error-message">Error: {FBaccessError}</span>
                 }
                 {/* Accesos de Facebook y Google */}
-                <ExternalAuth {...props} />
+                <ExternalAuth {...props} setFBAccessError={setFBAccessError}/>
             </div>
         </div>
     )
