@@ -50,7 +50,7 @@ export const fetchAllPostsFailure = (error) => {
 }
 
 // FAVS FETCHING
-export const fetchFavPosts = (posts) => {
+export const fetchFavPosts = () => {
     return {
         type: FETCH_FAVORITE_POSTS,
     }
@@ -58,7 +58,7 @@ export const fetchFavPosts = (posts) => {
 export const fetchFavPostsSuccess = (posts) => {
     return {
         type: FETCH_FAVORITE_POSTS_SUCCESS,
-        ids: posts,
+        posts: posts,
     }
 }
 export const fetchFavPostsFailure = (error) => { 

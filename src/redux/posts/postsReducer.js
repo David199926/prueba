@@ -93,18 +93,19 @@ const postsReducer = (state = initialState, action) => {
             }
 
         case FETCH_FAVORITE_POSTS_SUCCESS:
+            const ids = action.posts.map(post => post.id)
             return {
                 all: {
                     ...state.all,
                     data: state.all.data.map(post => ({
                         ...post,
-                        isFav: action.ids.includes(post.id), 
+                        isFav: ids.includes(post.id), 
                     }))
                 },
                 favs: {
                     ...state.favs,
                     loading: false,
-                    data: state.all.data.filter(post => action.ids.includes(post.id)),
+                    data: action.posts
                 }
             }
 

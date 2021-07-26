@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 const FavoritePosts = (props) => {
 
     // redux props
-    const { data, userId, removeFromFavorites } = props;
+    const { loading, error, data, userId, removeFromFavorites } = props;
 
     const itemActiveState = {
         title: "Remover de favoritos",
@@ -27,8 +27,8 @@ const FavoritePosts = (props) => {
         <PostsList
             title="Posts favoritos"
             data={data}
-            error="" // no hay errores
-            loading={false} // no es lista asincrona
+            loading={loading}
+            error={error}
             inactiveState={itemInactiveState}
             activeState={itemActiveState}
             onItemClick={onItemClick}
@@ -38,6 +38,8 @@ const FavoritePosts = (props) => {
 
 // redux
 const mapStateToProps = state => ({
+    loading: state.posts.favs.loading,
+    error: state.posts.favs.error,
     data: state.posts.favs.data,
     userId: state.user.userId,
 })

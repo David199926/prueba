@@ -9,13 +9,14 @@ import FavoritePosts from './FavoritePosts/FavoritePosts';
 import { connect } from 'react-redux';
 import { fetchPosts, fetchUserFavs } from '../../../redux/index';
 
-const PostsPageBody = ({ userId, fetchAllPosts, fetchUserFavs }) => {
+const PostsPageBody = ({ userId, all, fetchAllPosts, fetchUserFavs }) => {
 
     useEffect(() => {
         // call API for posts
         fetchAllPosts();
         // bring user favs from db
         fetchUserFavs(userId);
+        
     }, []);
 
     return (
@@ -40,6 +41,7 @@ const PostsPageBody = ({ userId, fetchAllPosts, fetchUserFavs }) => {
 
 const mapStateToProps = state => ({
     userId: state.user.userId,
+    all: state.posts.all.data,
 })
 const mapDispatchToProps = (dispatch) => ({
     fetchAllPosts: () => dispatch(fetchPosts()),
