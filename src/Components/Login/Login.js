@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 // React Router
 import { Link } from 'react-router-dom';
 // Styles
@@ -13,11 +13,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import MyTextField from '../Common/MyTextField/MyTextField';
 import PasswordInput from '../Common/Password/Password';
 import ExternalAuth from './ExternalAuth/ExternalAuth';
-// redux
-import { useDispatch } from 'react-redux';
-import { logIn as logInAction } from '../../redux/index';
-// firebase
-import { logIn as logInFirebase } from '../../firebase/userAuth';
+// custom hook
+import useLogin from './useLogin'
+import useValidation from '../../hooks/useValidation'
+
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -33,57 +32,30 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props) => {
     // Hooks
     const classes = useStyles();
-    const dispatch = useDispatch();
-    // State
-    const [email, setEmail] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordError, setPasswordError] = useState("")
-    const [FBaccessError, setFBAccessError] = useState("");
+    const {
+        isValid,
+        email,
+        updateEmail,
+        password,
+        updatePassword,
+        emailError,
+        setEmailError,
+        passwordError,
+        setPasswordError
+    } = useValidation();
+    const {
+        tryToAccess,
+        FBError,
+        setFBError
+    } = useLogin(email, password, setEmailError, setPasswordError);
 
-    const checkEmpty = () => {
-        let ok = true;
-        if (email === "") {
-            setEmailError("Campo requerido")
-            ok = false;
-        }
-        if (password === "") {
-            setPasswordError("Campo requerido")
-            ok = false;
-        }
-        return ok;
-    }
-    const fireBaseLogin = () => {
-        logInFirebase(email, password)
-        .then((res) => {
-            dispatch(logInAction(res.user.uid));
-            props.history.push('/posts');
-        })
-        .catch((err) => {
-            switch (err.code) {
-                case "auth/wrong-password":
-                    setPasswordError("Contraseña incorrecta");
-                    break;
-                case "auth/invalid-email":
-                    setEmailError("Correo inválido");
-                    break;
-                default: setFBAccessError(err.message);
-            }
-        })
-    }
-    const resetErrors = () => {
-        setFBAccessError("");
-        setEmailError("");
-        setPasswordError("");
-    }
-    // Login function
     const logIn = (e) => {
         e.preventDefault();
-        resetErrors();
-        // Empty fields check
-        if (!checkEmpty()) return false;
-        // firebase check
-        fireBaseLogin();
+        if (isValid()) {
+            tryToAccess(() => {
+                props.history.push("/posts")
+            })
+        }
     }
 
     return (
@@ -93,7 +65,7 @@ const Login = (props) => {
 
             <div className="login-panel" >
                 <h1 className="login-title">Inicia <strong>Sesión</strong></h1>
-                <form onSubmit={e => logIn(e)} action="" autoComplete="on">
+                <form onSubmit={logIn} action="" autoComplete="on">
                     <div className="login-inputs">
                         {/* Nombre de usuario */}
                         <MyTextField
@@ -104,7 +76,7 @@ const Login = (props) => {
                             fullWidth
                             variant="outlined"
                             value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            onChange={updateEmail}
                             type="email"
                             error={emailError !== ""}
                             helperText={emailError}
@@ -116,7 +88,7 @@ const Login = (props) => {
                             error={passwordError !== ""}
                             helperText={passwordError}
                             password={password}
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={updatePassword}
                         />
                         {/* Link de registro */}
                         <Link className="form-link" to="/signin">¿No tienes cuenta? Registrate aquí</Link>
@@ -131,11 +103,11 @@ const Login = (props) => {
                     </Button>
                 </form>
                 {
-                    FBaccessError !== "" &&
-                    <span className="error-message">Error: {FBaccessError}</span>
+                    FBError !== "" &&
+                    <span className="error-message">Error: {FBError}</span>
                 }
                 {/* Accesos de Facebook y Google */}
-                <ExternalAuth {...props} setFBAccessError={setFBAccessError}/>
+                <ExternalAuth {...props} setFBAccessError={setFBError}/>
             </div>
         </div>
     )

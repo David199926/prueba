@@ -1,0 +1,19 @@
+
+.signin-message {
+    display: flex;
+    flex-direction: column;
+
+    // titulo
+    .title {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+        font-weight: 100;
+        text-align: center;
+    }
+    
+    // link
+    .form-link {
+        align-self: center;
+    }
+}

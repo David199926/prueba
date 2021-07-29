@@ -47,29 +47,14 @@
         box-sizing: border-box;
     }
 
-    // mensaje despues de registro
-    .signin-message {
-        display: flex;
-        flex-direction: column;
-
-        // titulo
-        .title {
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 2rem;
-            font-weight: 100;
-            text-align: center;
-        }
-        // mensaje de error
-        .error-message {
-            font-weight: 100;
-            color: #ff3657;
-            margin-bottom: 2rem;
-        }
-        // link
-        .form-link {
-            align-self: center;
-        }
+    // mensaje de error
+    .error-message {
+        font-weight: 100;
+        color: #ff3657;
+        margin-bottom: 2rem;
     }
+
+    // mensaje despues de registro
+    @import './signin_message'
     
 }

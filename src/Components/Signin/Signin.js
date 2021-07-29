@@ -12,8 +12,9 @@ import { makeStyles } from "@material-ui/core/styles";
 // My components
 import MyTextField from '../Common/MyTextField/MyTextField';
 import PasswordInput from '../Common/Password/Password';
-// firebase
-import { register } from '../../firebase/userAuth';
+// custom hooks
+import useValidation from '../../hooks/useValidation';
+import useSignin from './useSignin';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -29,15 +30,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Signin = () => {
 
-    const [registered, setRegistered] = useState(false);
-    const [signinError, setSigninError] = useState("");
+    const validationData = useValidation();
+    const {
+        register,
+        registered,
+        signinError
+    } = useSignin(validationData.email, validationData.password)
 
     const pageContent = () => {
-        return signinError !== "" ? // Hubo error
-            <SigninMessage error errorMessage={signinError}/> :
-            registered ? // registro exitoso
-            <SigninMessage /> : // aun no se registra
-            <SignInForm setRegistered={setRegistered} setSigninError={setSigninError} />
+        return registered ?
+            <SigninMessage /> : // registro exitoso
+            <SignInForm {...validationData} register={register} signinError={signinError}/> // aun no se registra
     }
 
     return (
@@ -65,41 +68,49 @@ const LandingLink = () => {
 }
 
 // Formulario de registro
-const SignInForm = ({ setRegistered, setSigninError }) => {
+const SignInForm = (props) => {
+
+    const {
+        isValid,
+        email,
+        updateEmail,
+        password,
+        updatePassword,
+        emailError,
+        passwordError,
+        register,
+        signinError
+    } = props;
     // Hooks
     const classes = useStyles();
-    // State
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
 
     // Siginn function
     const signIn = () => {
-        register(email, password)
-        .then(() => {
-            setRegistered(true)
-        })
-        .catch((err) => {
-            setSigninError(err.message)
-        })
+        if (isValid()) register();
     }
 
     return (
         <div className="signin-inputs">
             {/* Nombre de usuario */}
             <MyTextField
+                id="user-email"
+                name="email"
                 label="Correo"
                 fullWidth
                 variant="outlined"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={updateEmail}
                 type="email"
+                error={emailError !== ""}
+                helperText={emailError}
             />
             {/* Contraseña de usuario */}
             <PasswordInput
-                error={""}
-                helperText={""}
+                error={passwordError !== ""}
+                helperText={passwordError}
                 password={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={updatePassword}
             />
             {/* Link de login */}
             <Link className="form-link" to="/login">¿Ya tienes cuenta? inicia sesión aquí</Link>
@@ -111,24 +122,15 @@ const SignInForm = ({ setRegistered, setSigninError }) => {
             >
                 Crear cuenta
             </Button>
+            <span className="error-message">{signinError}</span>
         </div>
     )
 }
 
-const SigninMessage = ({ error, errorMessage }) => (
-    
+const SigninMessage = () => (
+
     <div className="signin-message">
-        {/* titulo de error */}
-        {
-            !error ?
-            <h2 className="title">Usuario registrado exitosamente</h2> :
-            <h2 className="title">Ha ocurrido un error</h2>
-        }
-        {/* mensaje de error */}
-        {
-            error ? 
-            <span className="error-message">{errorMessage}</span> : null
-        }
+        <h2 className="title">Usuario registrado exitosamente</h2>
         <Link className="form-link" to="/login">Regresar a inicio de sesión</Link>
     </div>
 )
