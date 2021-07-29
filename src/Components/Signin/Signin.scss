@@ -37,24 +37,26 @@
         font-weight: 100;
     }
 
-    /* contenedor de inputs */
-    .signin-inputs {
+    form {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        box-sizing: border-box;
-    }
+        /* contenedor de inputs */
+        .signin-inputs {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            box-sizing: border-box;
+        }
 
-    // mensaje de error
-    .error-message {
-        font-weight: 100;
-        color: #ff3657;
-        margin-bottom: 2rem;
+        // mensaje de error
+        .error-message {
+            font-weight: 100;
+            color: #ff3657;
+            margin-bottom: 2rem;
+        }
     }
 
     // mensaje despues de registro
     @import './signin_message'
-    
 }

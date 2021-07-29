@@ -40,7 +40,7 @@ const Signin = () => {
     const pageContent = () => {
         return registered ?
             <SigninMessage /> : // registro exitoso
-            <SignInForm {...validationData} register={register} signinError={signinError}/> // aun no se registra
+            <SignInForm {...validationData} register={register} signinError={signinError} /> // aun no se registra
     }
 
     return (
@@ -84,46 +84,47 @@ const SignInForm = (props) => {
     // Hooks
     const classes = useStyles();
 
-
     // Siginn function
-    const signIn = () => {
+    const signIn = (e) => {
+        e.preventDefault();
         if (isValid()) register();
     }
 
     return (
-        <div className="signin-inputs">
-            {/* Nombre de usuario */}
-            <MyTextField
-                id="user-email"
-                name="email"
-                label="Correo"
-                fullWidth
-                variant="outlined"
-                value={email}
-                onChange={updateEmail}
-                type="email"
-                error={emailError !== ""}
-                helperText={emailError}
-            />
-            {/* Contraseña de usuario */}
-            <PasswordInput
-                error={passwordError !== ""}
-                helperText={passwordError}
-                password={password}
-                onChange={updatePassword}
-            />
-            {/* Link de login */}
-            <Link className="form-link" to="/login">¿Ya tienes cuenta? inicia sesión aquí</Link>
-            <Button
-                variant="contained"
-                className={classes.button}
-                type="submit"
-                onClick={signIn}
-            >
-                Crear cuenta
-            </Button>
-            <span className="error-message">{signinError}</span>
-        </div>
+        <form onSubmit={signIn} action="" autoComplete="on">
+            <div className="signin-inputs">
+                {/* Nombre de usuario */}
+                <MyTextField
+                    id="user-email"
+                    name="email"
+                    label="Correo"
+                    fullWidth
+                    variant="outlined"
+                    value={email}
+                    onChange={updateEmail}
+                    type="email"
+                    error={emailError !== ""}
+                    helperText={emailError}
+                />
+                {/* Contraseña de usuario */}
+                <PasswordInput
+                    error={passwordError !== ""}
+                    helperText={passwordError}
+                    password={password}
+                    onChange={updatePassword}
+                />
+                {/* Link de login */}
+                <Link className="form-link" to="/login">¿Ya tienes cuenta? inicia sesión aquí</Link>
+                <Button
+                    variant="contained"
+                    className={classes.button}
+                    type="submit"
+                >
+                    Crear cuenta
+                </Button>
+                <span className="error-message">{signinError}</span>
+            </div>
+        </form>
     )
 }
 

@@ -3,7 +3,7 @@ import { act, render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import { prettyDOM } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
-import Login from './Login'
+import Signin from './Signin'
 import { Provider } from 'react-redux';
 import store from '../../redux/store'
 import {
@@ -19,17 +19,17 @@ beforeEach(() => {
     component = render(
         <Router>
             <Provider store={store}>
-                <Login />
+                <Signin />
             </Provider>
         </Router>
     )
-    button = component.getByText("Acceder").parentNode
+    button = component.getByText("Crear cuenta").parentNode
     email = component.getAllByText("Correo")[0].parentNode
     password = component.getByText("Contraseña").parentNode
 })
 
-describe('Pruebas de validacion de campos', () => {
-    
+describe("Pruebas de validacion de campos", () => {
+
     test("acceder con correo y contraseña vacios", () => {
         act(() => {
             fireEvent.click(button)
@@ -44,7 +44,7 @@ describe('Pruebas de validacion de campos', () => {
             fireEvent.click(button)
         })
         expect(password).not.toHaveTextContent("Campo requerido")
-        expect(email).toHaveTextContent("Campo requerido")
+        expect(email).toHaveTextContent("Campo requerido") 
     })
 
     test("acceder con contraseña vacia", () => {
@@ -57,17 +57,34 @@ describe('Pruebas de validacion de campos', () => {
     })
 })
 
-describe("Pruebas con credenciales incorrectas", () => {
+describe("Pruebas de validacion de registro", () => {
 
-    test("acceder con contraseña incorrecta", () => {
-        userEvent.type(email.querySelector("input"), 'guitarrista1999@gmail.com')
-        userEvent.type(password.querySelector("input"), 'guitarrista1999@gmail.com')
+    test("constraseña con menos de 6 caracteres", () => {
+        userEvent.type(email.querySelector("input"), 'Hello@gmail.com')
+        userEvent.type(password.querySelector("input"), '12345')
+        act(() => {
+            fireEvent.click(button)
+        })
         act(() => {
             fireEvent.click(button)
         })
         waitFor(() => {
-            expect(email).toHaveTextContent("Contraseña incorrecta")
+            expect(component).toHaveTextContent("La contraseña debe poseer al menos 6 caracteres")
         })
     })
-})
 
+    test("registrarse con correo en uso", () => {
+        userEvent.type(email.querySelector("input"), 'guitarrista1999@gmail.com')
+        userEvent.type(password.querySelector("input"), '1234567890')
+        act(() => {
+            fireEvent.click(button)
+        })
+        act(() => {
+            fireEvent.click(button)
+        })
+        waitFor(() => {
+            expect(component).toHaveTextContent("Este correo ya se encuentra registrado")
+        })
+    })
+
+})
