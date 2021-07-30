@@ -8,8 +8,9 @@ import Posts from './Components/Posts/Posts';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
+  Route
 } from 'react-router-dom'
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 // React redux
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -19,22 +20,21 @@ import store from './redux/store';
 
 function App() {
   return (
-    
+
       <Provider store={store}>
         <Router>
           <Switch>
             {/* Langing page */}
-            <Route exact path="/" component={Landing} />
+            <ProtectedRoute logged={false} exact path="/" component={Landing} />
             {/* Login page */}
-            <Route exact path="/login" component={Login} />
+            <ProtectedRoute logged={false} path="/login" component={Login} />
             {/* Signin page */}
-            <Route exact path="/signin" component={Signin} />
+            <ProtectedRoute logged={false} path="/signin" component={Signin} />
             {/* Posts page */}
-            <Route exact path="/posts" component={Posts} />
+            <ProtectedRoute logged={true} path="/posts" component={Posts} />
           </Switch>
         </Router>
       </Provider>
-    
   );
 }
 

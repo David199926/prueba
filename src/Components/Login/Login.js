@@ -52,9 +52,7 @@ const Login = (props) => {
     const logIn = (e) => {
         e.preventDefault();
         if (isValid()) {
-            tryToAccess(() => {
-                props.history.push("/posts")
-            })
+            tryToAccess()
         }
     }
 

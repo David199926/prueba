@@ -7,8 +7,6 @@ import StarOutlineRoundedIcon from '@material-ui/icons/StarOutlineRounded';
 // redux
 import { addToFavorites, removeFromFavorites } from '../../../../redux/index';
 import { connect } from 'react-redux';
-// firebase
-import { updateUserFavs } from '../../../../firebase/usersCollection'
 
 const AllPosts = (props) => {
 

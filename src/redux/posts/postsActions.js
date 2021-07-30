@@ -31,7 +31,7 @@ export const flushFavPosts = () => {
 }
 
 // ALL FETCHING
-export const fetchAllPosts = (posts) => {
+export const fetchAllPosts = () => {
     return {
         type: FETCH_ALL_POSTS,
     }
