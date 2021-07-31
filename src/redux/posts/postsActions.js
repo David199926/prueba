@@ -87,32 +87,60 @@ export const removeFromFavorites = (postsId, userId, persist) => {
     }
 }
 
+
+const fetchPostsAsync = async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        axios.get(`${API_URL}/posts`)
+        .then( response => {
+            dispatch(fetchAllPostsSuccess(response.data.data));
+            resolve();
+        })
+        .catch(error => {
+            dispatch(fetchAllPostsFailure(error.message));
+            reject(error);
+        })
+    })
+}
+
+const fetchFavsAsync = async (dispatch, userId) => {
+    return new Promise((resolve, reject) => {
+        getUserFavs(userId)
+        .then( favs => {
+            dispatch(fetchFavPostsSuccess(favs))
+            console.log(favs)
+            resolve();
+        })
+        .catch( error => {
+            dispatch(fetchFavPostsFailure(error.message))
+            reject(error);
+        })
+    })
+}
+
 export const fetchPosts = () => {
     return (dispatch) => {
         dispatch(fetchAllPosts())
-
-        axios.get(`${API_URL}/posts`)
-        .then( response => {
-            const posts = response.data.data;
-            dispatch(fetchAllPostsSuccess(posts));
-        })
-        .catch(error => {
-            const errorMessage = error.message;
-            dispatch(fetchAllPostsFailure(errorMessage));
-        })
+        fetchPostsAsync(dispatch)
     }
 }
 
 export const fetchUserFavs = (userId) => {
     return (dispatch) => {
         dispatch(fetchFavPosts())
-        getUserFavs(userId)
-        .then( favs => {
-            dispatch(fetchFavPostsSuccess(favs))
+        fetchFavsAsync(dispatch, userId)
+    }
+}
+
+export const fetchPostsAndFavs = (userId) => {
+    return (dispatch) => {
+        dispatch(fetchAllPosts())
+        dispatch(fetchFavPosts())
+        fetchPostsAsync(dispatch)
+        .then(() => {
+            fetchFavsAsync(dispatch, userId)
         })
-        .catch( error => {
-            const errorMessage = error.message;
-            dispatch(fetchFavPostsFailure(errorMessage))
+        .catch((err) => {
+            dispatch(fetchFavPostsFailure(err.message))
         })
     }
 }

@@ -24,6 +24,7 @@ const userReducer = (state = initialState, action) => {
             ...state,
             userId: action.userId,
             loading: false,
+            error: ""
         }
         case LOG_IN_FAILURE: return {
             ...state,
@@ -38,6 +39,7 @@ const userReducer = (state = initialState, action) => {
             ...state,
             userId: "",
             loading: false,
+            error: "",
         }
         case LOG_OUT_FAILURE: return {
             ...state,
