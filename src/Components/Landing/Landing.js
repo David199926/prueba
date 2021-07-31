@@ -9,7 +9,7 @@ export default class Landing extends Component {
     render() {
         return (
             <div>
-                <Nav {...this.props}/>
+                <Nav/>
                 <Inicio/>
                 <Beneficios/>
                 <Contact />

@@ -11,34 +11,21 @@ import MyDrawer from '../../Common/MyDrawer/MyDrawer';
 // redux
 import { useDispatch } from 'react-redux';
 import { logOut as logOutAction, flushAllPosts, flushFavPosts } from '../../../redux/index';
+// Custom hooks
+import useDrawer from '../../Common/MyDrawer/useDrawer';
 
-const PageNav = (props) => {
-
+const PageNav = () => {
     // State
-    const [drawerOpen, setDrawerOpen] = useState(false);
     const [userName, setUserName] = useState("Felipe");
+    const { drawerOpen, openDrawer, closeDrawer } = useDrawer();
 
     const dispatch = useDispatch();
-
-    // Toggle drawer
-    const toggleDrawer = (open) => (event) => {
-        setDrawerOpen(open);
-    }
-
     // logOut fuction
     const logOut = () => {
         dispatch(logOutAction());
         dispatch(flushAllPosts());
         dispatch(flushFavPosts());
     }
-
-    // Drawer actions
-    const drawerItems = [
-        {
-            title: "Cerrar sesión",
-            onClick: logOut
-        }
-    ];
 
     const UserNameComponent = () => (
         <div className="user-name">
@@ -47,7 +34,7 @@ const PageNav = (props) => {
     )
 
     // Componentes de accion del nav
-    const Actions = (props) => (
+    const Actions = () => (
         <div className="nav-actions">
             {/* nombre del usuario que inicio sesion */}
             <UserNameComponent/>
@@ -71,14 +58,19 @@ const PageNav = (props) => {
                 className="menuIcon"
                 src={menu}
                 alt="menu-icon"
-                onClick={toggleDrawer(true)}
+                onClick={openDrawer}
             />
             {/* Drawer */}
             <MyDrawer
                 anchor="left"
                 open={drawerOpen}
-                onClose={toggleDrawer(false)}
-                items={drawerItems}
+                onClose={closeDrawer}
+                items={[
+                    {
+                        title: "Cerrar sesión",
+                        onClick: logOut
+                    }
+                ]}
             >
                 <UserNameComponent/>
             </MyDrawer>

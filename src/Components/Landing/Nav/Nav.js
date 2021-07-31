@@ -1,51 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 // Styles
 import './Nav.scss'
 // Resources
 import logo from '../../../Resources/LogoNav.png';
 import menu from '../../../Resources/Icons/Menu.svg';
-// material ui
-import { makeStyles } from "@material-ui/core/styles";
-import { Link } from 'react-router-dom';
 // My Components
 import MyDrawer from '../../Common/MyDrawer/MyDrawer';
+import useDrawer from '../../Common/MyDrawer/useDrawer';
+// router
+import { withRouter } from "react-router";
+import { Link } from 'react-router-dom';
+// Custom hooks
+import useNav from './useNav'
   
 const Nav = (props) => {
-    // State
-    const [drawerOpen, setDrawerOpen] = useState(false);
-    const [navInTop, setNavInTop] = useState(true);
-    let scrollListener = null;
-
-    // Effects
-    useEffect(() => {
-        scrollListener = document.addEventListener("scroll", e => {
-            var onTop = document.scrollingElement.scrollTop === 0;
-            if (onTop !== navInTop) setNavInTop(onTop)
-        })
-        return () => {
-            document.removeEventListener("scroll", scrollListener)
-        }
-    }, [navInTop])
-
-    // Styles
-    const useStyles = makeStyles((theme) => ({
-        button: {
-            borderRadius: "15px",
-            height: "30px",
-            width: "70px",
-        },
-        nav: {
-            backgroundColor: navInTop ? "transparent" : "black",
-            borderColor:  navInTop ? "#232323" : "black",
-        }
-    }))
-    // Style classes
-    const classes = useStyles();
-
-    // Toggle drawer
-    const toggleDrawer = (open) => (event) => {
-        setDrawerOpen(open);
-    }
+    
+    const { drawerOpen, openDrawer, closeDrawer } = useDrawer();
+    const styles = useNav();
 
     // Navbar actions
     const Actions = () => (
@@ -62,14 +33,14 @@ const Nav = (props) => {
         {
             title: "inicio",
             onClick: () => {
-                toggleDrawer(false)();
+                closeDrawer();
                 window.location.href = "#inicio";
             }
         },
         {
             title: "beneficios",
             onClick: () => {
-                toggleDrawer(false)();
+                closeDrawer();
                 window.location.href = "#beneficios";
             }
         },
@@ -82,7 +53,7 @@ const Nav = (props) => {
     ]
 
     return (
-        <div className={`${classes.nav} navbar`}>
+        <div className={`${styles.nav} navbar`}>
             <img className="logo" src={logo} alt="company-logo" />
             <Actions />
             {/* Menu Icon */}
@@ -90,17 +61,17 @@ const Nav = (props) => {
                 className="menuIcon"
                 src={menu}
                 alt="menu-icon"
-                onClick={toggleDrawer(true)}
+                onClick={openDrawer}
             />
             {/* Drawer */}
             <MyDrawer
                 anchor="left" 
                 open={drawerOpen}
-                onClose={toggleDrawer(false)}
+                onClose={closeDrawer}
                 items={navItems}
             />
         </div>
     )
 }
 
-export default Nav;
+export default withRouter(Nav);

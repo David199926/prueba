@@ -32,15 +32,17 @@ const userReducer = (state = initialState, action) => {
         }
         case LOG_OUT: return {
             ...state,
-            loading: false,
+            loading: true,
         }
         case LOG_OUT_SUCCESS: return {
             ...state,
             userId: "",
+            loading: false,
         }
         case LOG_OUT_FAILURE: return {
             ...state,
-            error: action.error 
+            error: action.error,
+            loading: false,
         }
         default: return state;
     }

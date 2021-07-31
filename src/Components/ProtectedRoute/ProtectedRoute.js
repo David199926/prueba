@@ -14,11 +14,11 @@ const ProtectedRoute = (props) => {
         if (logged) {
             // logged users can see the content
             return userId ?
-            <Component/> : <Redirect to="/" />
+            <Component /> : <Redirect to="/" />
         } else {
             // non logged users can see the content
             return userId ?
-            <Redirect to="/posts" /> : <Component/>
+            <Redirect to="/posts" /> : <Component />
         }
     }
 
