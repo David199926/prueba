@@ -34,10 +34,10 @@ const AllPosts = (props) => {
         return (isActive) => {
             if(isActive) {
                 // añadir a favoritos
-                addToFavorites(item.id, userId, true)
+                addToFavorites(item.id, userId)
             } else {
                 // remover de favoritos
-                removeFromFavorites(item.id, userId, true)
+                removeFromFavorites(item.id, userId)
             }
         }
     }
@@ -64,8 +64,8 @@ const mapStateToProps = state => ({
     userId: state.user.userId,
 })
 const mapDispatchToProps = dispatch => ({
-    addToFavorites: (id, userId, persist) => dispatch(addToFavorites(id, userId, persist)),
-    removeFromFavorites: (id, userId, persist) => dispatch(removeFromFavorites(id, userId, persist)),
+    addToFavorites: (id, userId) => dispatch(addToFavorites(id, userId)),
+    removeFromFavorites: (id, userId) => dispatch(removeFromFavorites(id, userId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllPosts)

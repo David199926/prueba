@@ -40,48 +40,19 @@ const findSelectedPost = (id, all) => {
     }
     return { selectedPost, updatedAll };
 }
-const removeFavFromAll = (id, all) => {
-    return all.map(post => {
-        if (post.id !== id) {
-            return post;
-        } else {
-            return { ...post, isFav: false }
-        }
-    })
-}
 
 const postsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_FAVORITES:
-            const { selectedPost, updatedAll } = findSelectedPost(action.id, state.all.data);
+            const { selectedPost } = findSelectedPost(action.id, state.all.data);
             var updatedFavs = selectedPost === null ? state.favs.data : [...state.favs.data, selectedPost];
-            if (action.persist) updateUserFavs(action.userId, updatedFavs);
-            return {
-                ...state,
-                all: {
-                    ...state.all,
-                    data: updatedAll,
-                },
-                favs: {
-                    ...state.favs,
-                    data: updatedFavs
-                }
-            }
+            updateUserFavs(action.userId, updatedFavs);
+            return {...state}
 
         case REMOVE_FROM_FAVORITES:
             var updatedFavs = state.favs.data.filter(fav => fav.id !== action.id);
-            if (action.persist) updateUserFavs(action.userId, updatedFavs);
-            return {
-                ...state,
-                all: {
-                    ...state.all,
-                    data: removeFavFromAll(action.id, state.all.data),
-                },
-                favs: {
-                    ...state.favs,
-                    data: state.favs.data.filter(fav => fav.id !== action.id)
-                }
-            }
+            updateUserFavs(action.userId, updatedFavs);
+            return {...state}
 
         case FETCH_FAVORITE_POSTS:
             return {

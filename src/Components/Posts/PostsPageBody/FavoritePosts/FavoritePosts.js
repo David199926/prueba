@@ -19,7 +19,7 @@ const FavoritePosts = (props) => {
 
     const onItemClick = (item) => {
         return () => {
-            removeFromFavorites(item.id, userId, true);
+            removeFromFavorites(item.id, userId);
         }
     }
 
@@ -44,7 +44,7 @@ const mapStateToProps = state => ({
     userId: state.user.userId,
 })
 const mapDispatchToProps = dispatch => ({
-    removeFromFavorites: (id, userId, persist) => dispatch(removeFromFavorites(id, userId, persist)),
+    removeFromFavorites: (id, userId) => dispatch(removeFromFavorites(id, userId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoritePosts)

@@ -1,7 +1,6 @@
 import db from './firestore'
 
 export const updateUserFavs = (userId, favs) => {
-    //const favsIds = favs.map(fav => fav.id)
     db.collection('usuarios').doc(userId).set({favs: favs})
 }
 
@@ -13,4 +12,9 @@ export const getUserFavs = async (userId) => {
     else {
         return [];
     }
+}
+
+export const onUserChange = (userId, callback) => {
+    return db.collection('usuarios').doc(userId)
+    .onSnapshot((doc) => callback(doc)) 
 }

@@ -7,12 +7,17 @@ import AllPosts from './AllPosts/AllPosts';
 import FavoritePosts from './FavoritePosts/FavoritePosts';
 // redux
 import { connect } from 'react-redux';
-import { fetchPostsAndFavs } from '../../../redux/index';
+import { fetchPostsAndFavs, fetchUserFavs } from '../../../redux/index';
+import { onUserChange } from '../../../firebase/usersCollection';
 
-const PostsPageBody = ({ userId, fetchPostsAndFavs }) => {
+
+const PostsPageBody = ({ userId, fetchPostsAndFavs, fetchUserFavs }) => {
 
     useEffect(() => {
         fetchPostsAndFavs(userId);
+        return onUserChange(userId, () => {
+            fetchUserFavs(userId);
+        })
     }, []);
 
     return (
@@ -40,6 +45,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = (dispatch) => ({
     fetchPostsAndFavs: (userId) => dispatch(fetchPostsAndFavs(userId)),
+    fetchUserFavs: (userId) => dispatch(fetchUserFavs(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsPageBody)

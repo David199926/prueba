@@ -14,16 +14,19 @@ import {
 // axios
 import axios from 'axios';
 // firebase
-import { getUserFavs } from '../../firebase/usersCollection'; 
+import { getUserFavs, onUserChange } from '../../firebase/usersCollection';
+
 
 // Posts API
 const API_URL = 'https://waco-api.herokuapp.com/api';
 
+// FLUSH POSTS
 export const flushAllPosts = () => {
     return {
         type: FLUSH_ALL_POSTS,
     }
 }
+
 export const flushFavPosts = () => {
     return {
         type: FLUSH_FAVORITE_POSTS,
@@ -42,7 +45,7 @@ export const fetchAllPostsSuccess = (posts) => {
         data: posts,
     }
 }
-export const fetchAllPostsFailure = (error) => { 
+export const fetchAllPostsFailure = (error) => {
     return {
         type: FETCH_ALL_POSTS_FAILURE,
         error: error,
@@ -61,59 +64,55 @@ export const fetchFavPostsSuccess = (posts) => {
         posts: posts,
     }
 }
-export const fetchFavPostsFailure = (error) => { 
+export const fetchFavPostsFailure = (error) => {
     return {
         type: FETCH_FAVORITE_POSTS_FAILURE,
         error: error,
     }
 }
 
-// Async action creator
+// ADD/REMOVE FROM FAVORITES
 export const addToFavorites = (postsId, userId, persist) => {
     return {
         type: ADD_TO_FAVORITES,
         id: postsId,
         userId: userId,
-        persist: persist,
     }
 }
-
 export const removeFromFavorites = (postsId, userId, persist) => {
     return {
         type: REMOVE_FROM_FAVORITES,
         id: postsId,
         userId: userId,
-        persist: persist,
     }
 }
 
-
+//ASYNC
 const fetchPostsAsync = async (dispatch) => {
     return new Promise((resolve, reject) => {
         axios.get(`${API_URL}/posts`)
-        .then( response => {
-            dispatch(fetchAllPostsSuccess(response.data.data));
-            resolve();
-        })
-        .catch(error => {
-            dispatch(fetchAllPostsFailure(error.message));
-            reject(error);
-        })
+            .then(response => {
+                dispatch(fetchAllPostsSuccess(response.data.data));
+                resolve();
+            })
+            .catch(error => {
+                dispatch(fetchAllPostsFailure(error.message));
+                reject(error);
+            })
     })
 }
 
 const fetchFavsAsync = async (dispatch, userId) => {
     return new Promise((resolve, reject) => {
         getUserFavs(userId)
-        .then( favs => {
-            dispatch(fetchFavPostsSuccess(favs))
-            console.log(favs)
-            resolve();
-        })
-        .catch( error => {
-            dispatch(fetchFavPostsFailure(error.message))
-            reject(error);
-        })
+            .then(favs => {
+                dispatch(fetchFavPostsSuccess(favs))
+                resolve();
+            })
+            .catch(error => {
+                dispatch(fetchFavPostsFailure(error.message))
+                reject(error);
+            })
     })
 }
 
@@ -136,11 +135,11 @@ export const fetchPostsAndFavs = (userId) => {
         dispatch(fetchAllPosts())
         dispatch(fetchFavPosts())
         fetchPostsAsync(dispatch)
-        .then(() => {
-            fetchFavsAsync(dispatch, userId)
-        })
-        .catch((err) => {
-            dispatch(fetchFavPostsFailure(err.message))
-        })
+            .then(() => {
+                fetchFavsAsync(dispatch, userId)
+            })
+            .catch((err) => {
+                dispatch(fetchFavPostsFailure(err.message))
+            })
     }
 }
